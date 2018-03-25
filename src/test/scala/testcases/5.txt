@@ -1,0 +1,4 @@
+/*block-comment 123
+456790 abcxyz*/
+//line comment \n \n
+int main()

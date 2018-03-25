@@ -1,2 +1,23 @@
 compile
 test
+compile
+compile 
+testOnly LexerSuite
+compile 
+testOnly LexerSuite
+compile 
+testOnly LexerSuite
+compile 
+testOnly LexerSuite
+compile 
+testOnly LexerSuite
+compile 
+testOnly LexerSuite
+compile 
+testOnly LexerSuite
+compile 
+testOnly LexerSuite
+compile 
+testOnly LexerSuite
+compile 
+testOnly LexerSuite

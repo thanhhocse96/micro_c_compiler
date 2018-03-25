@@ -18,28 +18,4 @@ public interface MCVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitProgram(MCParser.ProgramContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MCParser#mctype}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMctype(MCParser.MctypeContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MCParser#body}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBody(MCParser.BodyContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MCParser#exp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExp(MCParser.ExpContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MCParser#funcall}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFuncall(MCParser.FuncallContext ctx);
 }
