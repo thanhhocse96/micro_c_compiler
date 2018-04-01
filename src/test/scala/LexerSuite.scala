@@ -95,7 +95,7 @@ f = 3.444e-0;"""
     assert(checkLex(input,expect,12))
   }
 
-  test("013 - String with \n - illegal escape"){
+  test("013 - String with [enter] - illegal escape"){
     val input = """a = "The string
 is poo";"""
     val expect = """a,=,Illegal escape in string: The string"""
@@ -104,6 +104,7 @@ is poo";"""
   
   test("014 - Unclosed string"){
     val input = """a = "string;"""
-    val expect = """a,=,"Unclosed string: string"""
+    val expect = """a,=,Unclosed string: string;"""
+    assert(checkLex(input, expect, 14))
   }
 }

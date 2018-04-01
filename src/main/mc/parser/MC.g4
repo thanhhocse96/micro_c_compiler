@@ -39,7 +39,11 @@ options{
 	language=Java;
 }
 
-program  : .;
+program  : declList EOF;
+declList: decl+;
+decl: varDecl | funcDecl;
+varDecl:;
+funcDecl:;
 
 // Comments
 BLOCKCMT: '/*'.*?'*/' -> skip;
