@@ -1,14 +1,23 @@
 Run starting. Expected test count is: 0
 LexerSuite:
-- 001 - a simple identifier
-- 002 - half function declare
-- 003 - open and close parentheses
-- 004 - block comment
-- 005 - block comment & line comment
-- 006 - Boolean literal
-- 007 - String literal no error
-Run completed in 268 milliseconds.
-Total number of tests run: 7
+- 001 - A simple identifier
+- 002 - Half function declare
+- 003 - Open and close parentheses
+- 004 - Block comment
+- 005 - Block comment & line comment - no error
+- 006 - Boolean literal - no error
+- 007 - String literal - no error
+- 008 - Operator testing - no error
+- 009 - Boolean & int literal - no error
+- 010 - Float literal - no error
+- 011 - Not Float literal - error token - no fractional part
+- 012 - Not Float literal - No digit after exponent
+- 013 - String with 
+ - illegal escape *** FAILED ***
+  LexerSuite.this.checkLex(input, expect, 13) was false (LexerSuite.scala:102)
+- 014 - Unclosed string
+Run completed in 635 milliseconds.
+Total number of tests run: 14
 Suites: completed 1, aborted 0
-Tests: succeeded 7, failed 0, canceled 0, ignored 0, pending 0
-All tests passed.
+Tests: succeeded 13, failed 1, canceled 0, ignored 0, pending 0
+*** 1 TEST FAILED ***

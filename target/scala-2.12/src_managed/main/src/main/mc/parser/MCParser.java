@@ -20,11 +20,12 @@ public class MCParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		BLOCKCMT=1, LINECMT=2, WS=3, INTTYPE=4, BOOLTYPE=5, FLOATTYPE=6, STRINGTYPE=7, 
-		VOIDTYPE=8, TRUE=9, FALSE=10, ID=11, BOOLLIT=12, INTLIT=13, STRINGLIT=14, 
-		LB=15, RB=16, LP=17, RP=18, LS=19, RS=20, SEMI=21, DIVOP=22, MULOP=23, 
-		MODOP=24, PLUSOP=25, LTOP=26, LTEOP=27, GTOP=28, GTEOP=29, EQUALOP=30, 
-		DIFOP=31, ANDOP=32, OROP=33, ASSIGNOP=34, ERROR_CHAR=35, UNCLOSE_STRING=36, 
-		ILLEGAL_ESCAPE=37;
+		VOIDTYPE=8, BREAK=9, CONTINUE=10, IF=11, ELSE=12, FOR=13, RETURN=14, WHILE=15, 
+		DO=16, BOOLLIT=17, TRUE=18, FALSE=19, INTLIT=20, FLOATLIT=21, STRINGLIT=22, 
+		ID=23, LB=24, RB=25, LP=26, RP=27, LS=28, RS=29, SEMI=30, DIVOP=31, MULOP=32, 
+		MODOP=33, ADDOP=34, SUBOP=35, LTOP=36, LTEOP=37, GTOP=38, GTEOP=39, EQUALOP=40, 
+		NEQUALOP=41, ANDOP=42, OROP=43, ASSIGNOP=44, UNCLOSE_STRING=45, ILLEGAL_ESCAPE=46, 
+		ERROR_CHAR=47;
 	public static final int
 		RULE_program = 0;
 	public static final String[] ruleNames = {
@@ -33,16 +34,18 @@ public class MCParser extends Parser {
 
 	private static final String[] _LITERAL_NAMES = {
 		null, null, null, null, "'int'", "'boolean'", "'float'", "'string'", "'void'", 
-		"'true'", "'false'", null, null, null, null, "'('", "')'", "'{'", "'}'", 
-		"'['", "']'", "';'", "'/'", "'*'", "'%'", "'+'", "'<'", "'<='", "'>'", 
-		"'>='", "'=='", "'!='", "'&&'", "'||'", "'='"
+		"'break'", "'continue'", "'if'", "'else'", "'for'", "'return'", "'while'", 
+		"'do'", null, "'true'", "'false'", null, null, null, null, "'('", "')'", 
+		"'{'", "'}'", "'['", "']'", "';'", "'/'", "'*'", "'%'", "'+'", "'-'", 
+		"'<'", "'<='", "'>'", "'>='", "'=='", "'!='", "'&&'", "'||'", "'='"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, "BLOCKCMT", "LINECMT", "WS", "INTTYPE", "BOOLTYPE", "FLOATTYPE", 
-		"STRINGTYPE", "VOIDTYPE", "TRUE", "FALSE", "ID", "BOOLLIT", "INTLIT", 
-		"STRINGLIT", "LB", "RB", "LP", "RP", "LS", "RS", "SEMI", "DIVOP", "MULOP", 
-		"MODOP", "PLUSOP", "LTOP", "LTEOP", "GTOP", "GTEOP", "EQUALOP", "DIFOP", 
-		"ANDOP", "OROP", "ASSIGNOP", "ERROR_CHAR", "UNCLOSE_STRING", "ILLEGAL_ESCAPE"
+		"STRINGTYPE", "VOIDTYPE", "BREAK", "CONTINUE", "IF", "ELSE", "FOR", "RETURN", 
+		"WHILE", "DO", "BOOLLIT", "TRUE", "FALSE", "INTLIT", "FLOATLIT", "STRINGLIT", 
+		"ID", "LB", "RB", "LP", "RP", "LS", "RS", "SEMI", "DIVOP", "MULOP", "MODOP", 
+		"ADDOP", "SUBOP", "LTOP", "LTEOP", "GTOP", "GTEOP", "EQUALOP", "NEQUALOP", 
+		"ANDOP", "OROP", "ASSIGNOP", "UNCLOSE_STRING", "ILLEGAL_ESCAPE", "ERROR_CHAR"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -127,8 +130,8 @@ public class MCParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\'\7\4\2\t\2\3\2\3"+
-		"\2\3\2\2\2\3\2\2\2\5\2\4\3\2\2\2\4\5\13\2\2\2\5\3\3\2\2\2\2";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\61\7\4\2\t\2\3\2"+
+		"\3\2\3\2\2\2\3\2\2\2\5\2\4\3\2\2\2\4\5\13\2\2\2\5\3\3\2\2\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

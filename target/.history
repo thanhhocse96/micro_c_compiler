@@ -21,3 +21,30 @@ compile
 testOnly LexerSuite
 compile 
 testOnly LexerSuite
+compile
+testOnly LexerSuite
+compile 
+testOnly LexerSuite
+compile 
+testOnly LexerSuite
+compile 
+testOnly LexerSuite
+compile 
+testOnly LexerSuite
+COMPILE
+compile
+testOnly LexerSuite
+compile
+testOnly LexerSuite
+compile
+testOnly LexerSuite
+compile
+testOnly LexerSuite
+compile
+testOnly LexerSuite
+compile
+testOnly LexerSuite
+compile
+testOnly LexerSuite
+compile
+testOnly LexerSuite

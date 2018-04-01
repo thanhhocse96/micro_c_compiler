@@ -55,22 +55,34 @@ STRINGTYPE: 'string';
 VOIDTYPE: 'void' ;
 
 // Keywords
-TRUE: 'true';
-FALSE: 'false';
-
-// ID: catch after keywords
-ID: [a-zA-Z]+ ;
+BREAK: 'break';
+CONTINUE: 'continue';
+IF: 'if';
+ELSE: 'else';
+FOR: 'for';
+RETURN: 'return';
+WHILE: 'while';
+DO: 'do';
 
 // Literals
 // -- Boolean literal: contain 2 keywords
 BOOLLIT: TRUE | FALSE;
+// Boolean Keywords
+TRUE: 'true';
+FALSE: 'false';
 // -- Int literal
-INTLIT: [0-9]+;
+fragment DIGITS: [0-9];
+INTLIT: DIGITS+;
 // -- Float literal
-// FLOATLIT: ;
+fragment EXP: [eE]('-')?DIGITS+;
+fragment FRACTION: (DIGITS+'.'DIGITS*) | (DIGITS*'.'DIGITS+);
+FLOATLIT: (FRACTION)(EXP)?;
 // -- String literal
 fragment ESCAPE: [\b\f\r\n\t\'\"\\];
-STRINGLIT: '"'('\\'[bfrnt'"\\] | ~[\b\f\r\n\t\'\"\\])*'"';
+STRINGLIT: '"'('\\'[bfrnt'"\\] | ~[\b\f\r\n\t\'\"\\])*'"' {setText(getText().substring(1, getText().length()-1));};
+
+// ID: catch after keywords, literal
+ID: [a-zA-Z]+ ;
 
 LB: '(' ;
 RB: ')' ;
@@ -84,18 +96,18 @@ SEMI: ';' ;
 DIVOP: '/';
 MULOP: '*';
 MODOP: '%';
-PLUSOP: '+';
-//MINUS: '';
+ADDOP: '+';
+SUBOP: '-';
 LTOP: '<';
 LTEOP: '<=';
 GTOP: '>';
 GTEOP: '>=';
 EQUALOP: '==';
-DIFOP: '!=';
+NEQUALOP: '!=';
 ANDOP: '&&';
 OROP: '||';
 ASSIGNOP: '=';
 
+UNCLOSE_STRING: '"'('\\'[bfrnt'"\\] | ~[\b\f\r\n\t\'\"\\])+ {setText(getText().substring(1, getText().length()));};
+ILLEGAL_ESCAPE: '"'('\\'[bfrnt'"\\] | ~[\b\f\r\n\t\'\"\\])* [\b\f\r\n\t\'\"\\] {setText(getText().substring(1, getText().length()));};
 ERROR_CHAR: .;
-UNCLOSE_STRING: .;
-ILLEGAL_ESCAPE: .;

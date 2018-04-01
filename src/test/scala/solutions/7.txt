@@ -1,5 +1,5 @@
 a
 =
-"string lit \n \r \t bef"
+string lit \n \r \t bef
 ;
 <EOF>

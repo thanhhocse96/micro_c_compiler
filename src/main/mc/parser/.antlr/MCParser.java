@@ -19,30 +19,14 @@ public class MCParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		BLOCKCMT=1, LINECMT=2, WS=3, INTTYPE=4, BOOLTYPE=5, FLOATTYPE=6, STRINGTYPE=7, 
-		VOIDTYPE=8, TRUE=9, FALSE=10, ID=11, BOOLLIT=12, INTLIT=13, STRINGLIT=14, 
-		LB=15, RB=16, LP=17, RP=18, LS=19, RS=20, SEMI=21, DIVOP=22, MULOP=23, 
-		MODOP=24, PLUSOP=25, LTOP=26, LTEOP=27, GTOP=28, GTEOP=29, EQUALOP=30, 
-		DIFOP=31, ANDOP=32, OROP=33, ASSIGNOP=34, ERROR_CHAR=35, UNCLOSE_STRING=36, 
-		ILLEGAL_ESCAPE=37;
-	public static final int
 		RULE_program = 0;
 	public static final String[] ruleNames = {
 		"program"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, null, null, null, "'int'", "'boolean'", "'float'", "'string'", "'void'", 
-		"'true'", "'false'", null, null, null, null, "'('", "')'", "'{'", "'}'", 
-		"'['", "']'", "';'", "'/'", "'*'", "'%'", "'+'", "'<'", "'<='", "'>'", 
-		"'>='", "'=='", "'!='", "'&&'", "'||'", "'='"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, "BLOCKCMT", "LINECMT", "WS", "INTTYPE", "BOOLTYPE", "FLOATTYPE", 
-		"STRINGTYPE", "VOIDTYPE", "TRUE", "FALSE", "ID", "BOOLLIT", "INTLIT", 
-		"STRINGLIT", "LB", "RB", "LP", "RP", "LS", "RS", "SEMI", "DIVOP", "MULOP", 
-		"MODOP", "PLUSOP", "LTOP", "LTEOP", "GTOP", "GTEOP", "EQUALOP", "DIFOP", 
-		"ANDOP", "OROP", "ASSIGNOP", "ERROR_CHAR", "UNCLOSE_STRING", "ILLEGAL_ESCAPE"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -122,7 +106,7 @@ public class MCParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\'\7\4\2\t\2\3\2\3"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\2\7\4\2\t\2\3\2\3"+
 		"\2\3\2\2\2\3\2\2\2\2\5\2\4\3\2\2\2\4\5\13\2\2\2\5\3\3\2\2\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
