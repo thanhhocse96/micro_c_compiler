@@ -48,3 +48,5 @@ compile
 testOnly LexerSuite
 compile
 testOnly LexerSuite
+compile
+compile 

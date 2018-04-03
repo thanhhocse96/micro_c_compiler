@@ -44,6 +44,7 @@ program  : declList EOF;
 declList: decl+;
 decl: varDecl | funcDecl;
 
+// Variable Declare
 varDecl: primitiveType manyVar SEMI;
 manyVar: variable (COMMA variable)*;
 variable: ID | ID LS INTLIT RS;
@@ -51,9 +52,11 @@ variable: ID | ID LS INTLIT RS;
 // Primitive TYPE
 primitiveType: BOOLTYPE | INTTYPE | FLOATTYPE | STRINGTYPE;
 
+// Function Declare
 funcDecl: funcType ID LB paraList RB blockStmt;
 funcType: primitiveType | VOIDTYPE | outputArrPointerType;
-paraList: paraDecl*;
+paraList: paraListNonNull?;
+paraListNonNull: paraDecl (COMMA paraDecl)*;
 paraDecl: primitiveType (ID | ID LS RS);
 
 // Array pointer TYPE
@@ -85,11 +88,20 @@ returnStmt: noExpReturn | aExpReturn;
 noExpReturn: RETURN SEMI;
 aExpReturn: RETURN exp0 SEMI;
 // If statement
-ifStmt: ;
+stmtmatch: ifmatch
+    | otherStmt;
+stmtunmatch: ifunmatch
+    | otherStmt;
+
+ifStmt: ifmatch | ifunmatch;
+ifmatch: IF LB exp0 RB stmtmatch ELSE stmtmatch;
+// If statement with dangling
+ifunmatch: IF LB exp0 RB stmt
+         | IF LB exp0 RB stmtmatch ELSE stmtunmatch;
 // Do while statement
-forStmt: ;
+dowhileStmt: DO stmt+ WHILE exp0 SEMI;
 // For statement
-dowhileStmt:;
+forStmt: FOR LB exp0 SEMI exp0 SEMI exp0 RB stmt;
 // Expression statement
 expStmt: exp0 SEMI;
 // Expression
