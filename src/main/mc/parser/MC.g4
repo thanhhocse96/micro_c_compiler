@@ -39,12 +39,101 @@ options{
 	language=Java;
 }
 
+// Parser
 program  : declList EOF;
 declList: decl+;
 decl: varDecl | funcDecl;
-varDecl:;
-funcDecl:;
 
+varDecl: primitiveType manyVar SEMI;
+manyVar: variable (COMMA variable)*;
+variable: ID | ID LS INTLIT RS;
+
+// Primitive TYPE
+primitiveType: BOOLTYPE | INTTYPE | FLOATTYPE | STRINGTYPE;
+
+funcDecl: funcType ID LB paraList RB blockStmt;
+funcType: primitiveType | VOIDTYPE | outputArrPointerType;
+paraList: paraDecl*;
+paraDecl: primitiveType (ID | ID LS RS);
+
+// Array pointer TYPE
+arrayPointerType: inputArrPointerType
+    | outputArrPointerType;
+inputArrPointerType: primitiveType ID LS RS;
+outputArrPointerType: primitiveType LS RS;
+
+// Block statement
+blockStmt: LP declPart stmtPart RP;
+declPart: varDecl*;
+stmtPart: stmt*;
+
+stmt: ifStmt
+    | otherStmt;
+
+otherStmt: forStmt 
+    | dowhileStmt 
+    | breakStmt
+    | continueStmt 
+    | returnStmt 
+    | expStmt
+    | blockStmt;
+
+breakStmt: BREAK SEMI;
+continueStmt: CONTINUE SEMI;
+// Return Statement
+returnStmt: noExpReturn | aExpReturn;
+noExpReturn: RETURN SEMI;
+aExpReturn: RETURN exp0 SEMI;
+// If statement
+ifStmt: ;
+// Do while statement
+forStmt: ;
+// For statement
+dowhileStmt:;
+// Expression statement
+expStmt: exp0 SEMI;
+// Expression
+exp0: exp1 ASSIGNOP exp0
+    | exp1;
+exp1: exp1 OROP exp2
+    | exp2;
+exp2: exp2 ANDOP exp3
+    | exp3;
+exp3: exp4 EQUALOP exp4
+    | exp4 NEQUALOP exp4
+    | exp4;
+exp4: exp5 LTOP exp5
+    | exp5 GTOP exp5
+    | exp5 LTEOP exp5
+    | exp5 GTEOP exp5
+    | exp5;
+exp5: exp5 ADDOP exp6
+    | exp5 SUBOP exp6
+    | exp6;
+exp6: exp6 MULOP exp7
+    | exp6 DIVOP exp7
+    | exp6 MODOP exp7
+    | exp7;
+exp7: SUBOP exp7
+    | NEVOP exp7
+    | exp8;
+exp8: LB exp0 RB
+    | exp9;
+exp9: indexExp
+    | funcCall
+    | INTLIT
+    | FLOATLIT
+    | STRINGLIT
+    | BOOLLIT
+    | ID;
+
+indexExp: indexer LS exp0 RS;
+indexer: funcCall | ID;
+// Function call
+funcCall: ID LB argList RB;
+argList: argListNonNull?;
+argListNonNull: exp0 (COMMA exp0)*;
+// Lexer
 // Comments
 BLOCKCMT: '/*'.*?'*/' -> skip;
 LINECMT: '//'(~[\n\r])* -> skip;
@@ -95,8 +184,10 @@ RP: '}';
 LS: '[';
 RS: ']';
 SEMI: ';' ;
+COMMA: ',';
 
 // Operator
+NEVOP: '!';
 DIVOP: '/';
 MULOP: '*';
 MODOP: '%';
