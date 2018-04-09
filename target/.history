@@ -50,3 +50,17 @@ compile
 testOnly LexerSuite
 compile
 compile 
+testOnly LexerSuite
+testOnly ParserSuite
+testOnly LexerSuite
+compile 
+compile
+testOnly LexerSuite
+compile
+testOnly LexerSuite
+compile
+testOnly LexerSuite
+compile
+testOnly LexerSuite
+testOnly ParserSuite
+testOnly LexerSuite

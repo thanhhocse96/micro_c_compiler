@@ -1,0 +1,10 @@
+<
+primitive
+type
+>
+<
+many
+-
+variables
+>
+<EOF>

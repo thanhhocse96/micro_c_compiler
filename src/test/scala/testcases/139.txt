@@ -1,0 +1,9 @@
+int main(){
+int i, j;
+i = 0;
+j = 2;
+if (i == j)
+  j = 1;
+else
+  j = 3;
+}

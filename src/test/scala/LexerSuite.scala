@@ -482,11 +482,11 @@ is poo";"""
     assert(checkLex(input,expect,83))
   }
   test("084 - test Others 31") {
-    val input = """ if ( <expression> )
-                      <statement1>
+    val input = """ if ( a == b)
+                      a + b;
                     else
-                      <statement2>"""
-    val expect = "if,(,<,expression,>,),<,statement1,>,else,<,statement2,>,<EOF>"
+                      a;"""
+    val expect = "if,(,a,==,b,),a,+,b,;,else,a,;,<EOF>"
     assert(checkLex(input,expect,84))
   }
   test("085 - test Others 32") {

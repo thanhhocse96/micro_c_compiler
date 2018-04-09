@@ -1,0 +1,5 @@
+int [] foo (int b []) {
+                      int a [1];
+                      if () return a; //CORRECT
+                      else return b; //CORRECT
+                    }

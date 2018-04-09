@@ -1,0 +1,4 @@
+void foo(){
+if (true) return; //CORRECT
+else return 2 ; //WRONG
+}

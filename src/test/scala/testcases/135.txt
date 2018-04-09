@@ -1,0 +1,2 @@
+boolean boo[2]={true,false};;
+int main(){}

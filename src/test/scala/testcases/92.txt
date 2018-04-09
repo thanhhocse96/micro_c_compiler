@@ -1,0 +1,8 @@
+ putIntLn(i);
+                    {
+                      int main;
+                      main = f = i = 100;
+                      putIntLn (i);
+                      putIntLn (main);
+                      }
+                      putIntLn(main);

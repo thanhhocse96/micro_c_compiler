@@ -1,5 +1,21 @@
-a
+foo
+(
+2
+)
+[
+3
++
+x
+]
 =
-string lit \n \r \t bef
+a
+[
+b
+[
+2
+]
+]
++
+3
 ;
 <EOF>

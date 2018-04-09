@@ -1,0 +1,1 @@
+void main(){float a,b,c; a = 1; c = a;}

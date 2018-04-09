@@ -1,0 +1,16 @@
+putIntLn
+(
+i
+)
+;
+putIntLn
+(
+main
+)
+;
+putIntLn
+(
+f
+)
+;
+<EOF>

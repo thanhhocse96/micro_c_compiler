@@ -175,19 +175,19 @@ BOOLLIT: TRUE | FALSE;
 // Boolean Keywords
 TRUE: 'true';
 FALSE: 'false';
-// -- Int literal
 fragment DIGITS: [0-9];
-INTLIT: DIGITS+;
 // -- Float literal
 fragment EXP: [eE]('-')?DIGITS+;
 fragment FRACTION: (DIGITS+'.'DIGITS*) | (DIGITS*'.'DIGITS+);
-FLOATLIT: (FRACTION)(EXP)?;
+FLOATLIT: (FRACTION)(EXP)? | (DIGITS+EXP);
+// -- Int literal
+INTLIT: DIGITS+;
 // -- String literal
 fragment ESCAPE: [\b\f\r\n\t\'\"\\];
 STRINGLIT: '"'('\\'[bfrnt'"\\] | ~[\b\f\r\n\t\'\"\\])*'"' {setText(getText().substring(1, getText().length()-1));};
 
 // ID: catch after keywords, literal
-ID: [a-zA-Z]+ ;
+ID: [a-zA-Z_][a-zA-Z0-9_]* ;
 
 LB: '(' ;
 RB: ')' ;

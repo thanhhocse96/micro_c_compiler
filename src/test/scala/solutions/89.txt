@@ -1,0 +1,13 @@
+int
+i
+;
+int
+f
+(
+)
+{
+return
+200
+;
+}
+<EOF>

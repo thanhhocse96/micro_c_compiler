@@ -1,0 +1,7 @@
+{
+                      int i ; // local int variable
+                      i =3;
+                      if (i > 0)
+                        putInt (i);
+                      boolean b; //ERROR
+                    }

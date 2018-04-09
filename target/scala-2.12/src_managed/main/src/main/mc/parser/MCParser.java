@@ -21,7 +21,7 @@ public class MCParser extends Parser {
 	public static final int
 		BLOCKCMT=1, LINECMT=2, WS=3, INTTYPE=4, BOOLTYPE=5, FLOATTYPE=6, STRINGTYPE=7, 
 		VOIDTYPE=8, BREAK=9, CONTINUE=10, IF=11, ELSE=12, FOR=13, RETURN=14, WHILE=15, 
-		DO=16, BOOLLIT=17, TRUE=18, FALSE=19, INTLIT=20, FLOATLIT=21, STRINGLIT=22, 
+		DO=16, BOOLLIT=17, TRUE=18, FALSE=19, FLOATLIT=20, INTLIT=21, STRINGLIT=22, 
 		ID=23, LB=24, RB=25, LP=26, RP=27, LS=28, RS=29, SEMI=30, COMMA=31, NEVOP=32, 
 		DIVOP=33, MULOP=34, MODOP=35, ADDOP=36, SUBOP=37, LTOP=38, LTEOP=39, GTOP=40, 
 		GTEOP=41, EQUALOP=42, NEQUALOP=43, ANDOP=44, OROP=45, ASSIGNOP=46, UNCLOSE_STRING=47, 
@@ -61,7 +61,7 @@ public class MCParser extends Parser {
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, "BLOCKCMT", "LINECMT", "WS", "INTTYPE", "BOOLTYPE", "FLOATTYPE", 
 		"STRINGTYPE", "VOIDTYPE", "BREAK", "CONTINUE", "IF", "ELSE", "FOR", "RETURN", 
-		"WHILE", "DO", "BOOLLIT", "TRUE", "FALSE", "INTLIT", "FLOATLIT", "STRINGLIT", 
+		"WHILE", "DO", "BOOLLIT", "TRUE", "FALSE", "FLOATLIT", "INTLIT", "STRINGLIT", 
 		"ID", "LB", "RB", "LP", "RP", "LS", "RS", "SEMI", "COMMA", "NEVOP", "DIVOP", 
 		"MULOP", "MODOP", "ADDOP", "SUBOP", "LTOP", "LTEOP", "GTOP", "GTEOP", 
 		"EQUALOP", "NEQUALOP", "ANDOP", "OROP", "ASSIGNOP", "UNCLOSE_STRING", 
@@ -1010,7 +1010,7 @@ public class MCParser extends Parser {
 			setState(186);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BREAK) | (1L << CONTINUE) | (1L << IF) | (1L << FOR) | (1L << RETURN) | (1L << DO) | (1L << BOOLLIT) | (1L << INTLIT) | (1L << FLOATLIT) | (1L << STRINGLIT) | (1L << ID) | (1L << LB) | (1L << LP) | (1L << NEVOP) | (1L << SUBOP))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BREAK) | (1L << CONTINUE) | (1L << IF) | (1L << FOR) | (1L << RETURN) | (1L << DO) | (1L << BOOLLIT) | (1L << FLOATLIT) | (1L << INTLIT) | (1L << STRINGLIT) | (1L << ID) | (1L << LB) | (1L << LP) | (1L << NEVOP) | (1L << SUBOP))) != 0)) {
 				{
 				{
 				setState(183);
@@ -1072,8 +1072,8 @@ public class MCParser extends Parser {
 			case RETURN:
 			case DO:
 			case BOOLLIT:
-			case INTLIT:
 			case FLOATLIT:
+			case INTLIT:
 			case STRINGLIT:
 			case ID:
 			case LB:
@@ -1177,8 +1177,8 @@ public class MCParser extends Parser {
 				}
 				break;
 			case BOOLLIT:
-			case INTLIT:
 			case FLOATLIT:
+			case INTLIT:
 			case STRINGLIT:
 			case ID:
 			case LB:
@@ -1455,8 +1455,8 @@ public class MCParser extends Parser {
 			case RETURN:
 			case DO:
 			case BOOLLIT:
-			case INTLIT:
 			case FLOATLIT:
+			case INTLIT:
 			case STRINGLIT:
 			case ID:
 			case LB:
@@ -1522,8 +1522,8 @@ public class MCParser extends Parser {
 			case RETURN:
 			case DO:
 			case BOOLLIT:
-			case INTLIT:
 			case FLOATLIT:
+			case INTLIT:
 			case STRINGLIT:
 			case ID:
 			case LB:
@@ -1789,7 +1789,7 @@ public class MCParser extends Parser {
 				setState(259); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BREAK) | (1L << CONTINUE) | (1L << IF) | (1L << FOR) | (1L << RETURN) | (1L << DO) | (1L << BOOLLIT) | (1L << INTLIT) | (1L << FLOATLIT) | (1L << STRINGLIT) | (1L << ID) | (1L << LB) | (1L << LP) | (1L << NEVOP) | (1L << SUBOP))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BREAK) | (1L << CONTINUE) | (1L << IF) | (1L << FOR) | (1L << RETURN) | (1L << DO) | (1L << BOOLLIT) | (1L << FLOATLIT) | (1L << INTLIT) | (1L << STRINGLIT) | (1L << ID) | (1L << LB) | (1L << LP) | (1L << NEVOP) | (1L << SUBOP))) != 0) );
 			setState(261);
 			match(WHILE);
 			setState(262);
@@ -2533,8 +2533,8 @@ public class MCParser extends Parser {
 				}
 				break;
 			case BOOLLIT:
-			case INTLIT:
 			case FLOATLIT:
+			case INTLIT:
 			case STRINGLIT:
 			case ID:
 			case LB:
@@ -2598,8 +2598,8 @@ public class MCParser extends Parser {
 				}
 				break;
 			case BOOLLIT:
-			case INTLIT:
 			case FLOATLIT:
+			case INTLIT:
 			case STRINGLIT:
 			case ID:
 				enterOuterAlt(_localctx, 2);
@@ -2882,7 +2882,7 @@ public class MCParser extends Parser {
 			setState(406);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BOOLLIT) | (1L << INTLIT) | (1L << FLOATLIT) | (1L << STRINGLIT) | (1L << ID) | (1L << LB) | (1L << NEVOP) | (1L << SUBOP))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BOOLLIT) | (1L << FLOATLIT) | (1L << INTLIT) | (1L << STRINGLIT) | (1L << ID) | (1L << LB) | (1L << NEVOP) | (1L << SUBOP))) != 0)) {
 				{
 				setState(405);
 				argListNonNull();
@@ -3055,7 +3055,7 @@ public class MCParser extends Parser {
 		"\2\2\2hf\3\2\2\2hi\3\2\2\2i\5\3\2\2\2jm\5\b\5\2km\5\20\t\2lj\3\2\2\2l"+
 		"k\3\2\2\2m\7\3\2\2\2no\5\16\b\2op\5\n\6\2pq\7 \2\2q\t\3\2\2\2rw\5\f\7"+
 		"\2st\7!\2\2tv\5\f\7\2us\3\2\2\2vy\3\2\2\2wu\3\2\2\2wx\3\2\2\2x\13\3\2"+
-		"\2\2yw\3\2\2\2z\u0080\7\31\2\2{|\7\31\2\2|}\7\36\2\2}~\7\26\2\2~\u0080"+
+		"\2\2yw\3\2\2\2z\u0080\7\31\2\2{|\7\31\2\2|}\7\36\2\2}~\7\27\2\2~\u0080"+
 		"\7\37\2\2\177z\3\2\2\2\177{\3\2\2\2\u0080\r\3\2\2\2\u0081\u0082\t\2\2"+
 		"\2\u0082\17\3\2\2\2\u0083\u0084\5\22\n\2\u0084\u0085\7\31\2\2\u0085\u0086"+
 		"\7\32\2\2\u0086\u0087\5\24\13\2\u0087\u0088\7\33\2\2\u0088\u0089\5 \21"+
@@ -3137,7 +3137,7 @@ public class MCParser extends Parser {
 		"\u0176\3\2\2\2\u0178S\3\2\2\2\u0179\u017a\7\32\2\2\u017a\u017b\5D#\2\u017b"+
 		"\u017c\7\33\2\2\u017c\u017f\3\2\2\2\u017d\u017f\5V,\2\u017e\u0179\3\2"+
 		"\2\2\u017e\u017d\3\2\2\2\u017fU\3\2\2\2\u0180\u0188\5X-\2\u0181\u0188"+
-		"\5\\/\2\u0182\u0188\7\26\2\2\u0183\u0188\7\27\2\2\u0184\u0188\7\30\2\2"+
+		"\5\\/\2\u0182\u0188\7\27\2\2\u0183\u0188\7\26\2\2\u0184\u0188\7\30\2\2"+
 		"\u0185\u0188\7\23\2\2\u0186\u0188\7\31\2\2\u0187\u0180\3\2\2\2\u0187\u0181"+
 		"\3\2\2\2\u0187\u0182\3\2\2\2\u0187\u0183\3\2\2\2\u0187\u0184\3\2\2\2\u0187"+
 		"\u0185\3\2\2\2\u0187\u0186\3\2\2\2\u0188W\3\2\2\2\u0189\u018a\5Z.\2\u018a"+

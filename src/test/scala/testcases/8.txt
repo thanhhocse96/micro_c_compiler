@@ -1,2 +1,1 @@
-a = b + c - a / 3 * 4;
-b >= a || b && c == a;
+void foo (float a [])
