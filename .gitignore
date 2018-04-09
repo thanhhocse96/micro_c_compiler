@@ -6,4 +6,6 @@
 
 .src/test/scala/solutions
 .src/test/scala/testcases
+
+.target
 # End of https://www.gitignore.io/api/scala
