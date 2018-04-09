@@ -1,1 +1,0 @@
-Program([FuncDecl(main,[],VoidType,Block([],[CallExp(putIntLn,[IntLit(5)])]))])

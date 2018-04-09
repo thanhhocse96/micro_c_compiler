@@ -1,4 +1,0 @@
-int main () {
-int a,c[1];
-int b,d[2];
-}

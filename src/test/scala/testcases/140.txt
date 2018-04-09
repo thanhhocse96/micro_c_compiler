@@ -1,9 +1,0 @@
-int main(){
-do
-  do
-    break;
-    return;
-    continue;
-  while true;
-while true;
-}

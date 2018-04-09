@@ -1,1 +1,0 @@
-<primitive type> <many-variables>

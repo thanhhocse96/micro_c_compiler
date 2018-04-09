@@ -1,4 +1,0 @@
-putStringLn
-(
-)
-<EOF>

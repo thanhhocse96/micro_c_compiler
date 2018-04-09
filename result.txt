@@ -1,10 +1,4 @@
 Run starting. Expected test count is: 0
-AstSuite:
-- a simple program with void as return type of main
-- another simple program with int as return type of main *** FAILED ***
-  AstSuite.this.checkAst(input, expected, 202) was false (AstSuite.scala:16)
-- a simple program has a simple call putIntLn *** FAILED ***
-  AstSuite.this.checkAst(input, expected, 203) was false (AstSuite.scala:21)
 LexerSuite:
 - 001 - A simple identifier
 - 002 - Half function declare
@@ -18,9 +12,9 @@ LexerSuite:
 - 010 - Float literal - no error
 - 011 - Not Float literal - error token - no fractional part
 - 012 - Not Float literal - No digit after exponent
-- 013 - String with [enter] - illegal escape *** FAILED ***
-  LexerSuite.this.checkLex(input, expect, 13) was false (LexerSuite.scala:102)
-- 014 - Unclosed string
+- 013 - String with [enter] - illegal escape
+- 014 - Unclosed string *** FAILED ***
+  LexerSuite.this.checkLex(input, expect, 14) was false (LexerSuite.scala:108)
 - 015 - test INTLIT 2
 - 016 - test INTLIT 3
 - 017 - test FLOATLIT 1
@@ -54,14 +48,16 @@ LexerSuite:
 - 045 - test Identifier 7
 - 046 - test Identifier 8
 - 047 - test Identifier 9
-- 048 - test Unclosed string 1
+- 048 - test Unclosed string 1 *** FAILED ***
+  LexerSuite.this.checkLex(input, expect, 48) was false (LexerSuite.scala:279)
 - 049 - test Unclosed string 2 *** FAILED ***
   LexerSuite.this.checkLex(input, expect, 49) was false (LexerSuite.scala:284)
 - 050 - test Illegal escape 1 *** FAILED ***
   LexerSuite.this.checkLex(input, expect, 50) was false (LexerSuite.scala:289)
 - 051 - test Illegal escape 2 *** FAILED ***
   LexerSuite.this.checkLex(input, expect, 51) was false (LexerSuite.scala:294)
-- 052 - test Illegal escape 3
+- 052 - test Illegal escape 3 *** FAILED ***
+  LexerSuite.this.checkLex(input, expect, 52) was false (LexerSuite.scala:299)
 - 053 - test Error token 1
 - 054 - test Others 1
 - 055 - test Others 2
@@ -110,110 +106,8 @@ LexerSuite:
 - 098 - test Others 45
 - 099 - test Others 46
 - 100 - test Others 47
-ParserSuite:
-- 101 - test variable declaration in block
-- 102 - test variable declaration in block
-- 103 - test variable declaration in block
-- 104 - test variable declaration in block
-- 105 - test variable declaration in block
-- 106 - test variable declaration in block
-- 107 - test variable declaration in block
-- 108 - test variable declaration in block
-- 109 - test variable declaration in block
-- 110 - test variable declaration in block
-- 111 - test variable declaration
-- 112 - test variable declaration
-- 113 - test variable declaration
-- 114 - test variable declaration
-- 115 - test variable declaration
-- 116 - test variable declaration
-- 117 - test variable declaration
-- 118 - test variable declaration
-- 119 - test variable declaration
-- 120 - test variable declaration
-- 121 - test function declaration
-- 122 - test function declaration
-- 123 - test function declaration
-- 124 - test function declaration
-- 125 - test function declaration
-- 126 - test function declaration
-- 127 - test function declaration
-- 128 - test function declaration
-- 129 - test function declaration
-- 130 - test function declaration
-- 131 - test variable & function declaration
-- 132
-- 133
-- 134
-- 135
-- 136
-- 137
-- 138
-- 139 - test Statement
-- 140 - test Statement
-- 141 - test Statement
-- 142 - test Statement
-- 143
-- 144
-- 145
-- 146
-- 147
-- 148
-- 149
-- 150
-- 151
-- 152
-- 153
-- 154
-- 155
-- 156
-- 157
-- 158
-- 159
-- 160
-- 161 - test Expression 1
-- 162 - test Expression 2
-- 163 - test Expression 3
-- 164 - test Expression 4
-- 165 - test Expression 5
-- 166 - test Expression 6
-- 167
-- 168
-- 169
-- 170
-- 171
-- 172
-- 173
-- 174
-- 175 *** FAILED ***
-  ParserSuite.this.checkRec(input, expect, 175) was false (ParserSuite.scala:542)
-- 176
-- 177
-- 178
-- 179
-- 180
-- 181
-- 182
-- 183
-- 184
-- 185
-- 186
-- 187
-- 188
-- 189
-- 190
-- 191
-- 192
-- 193
-- 194
-- 195
-- 196
-- 197
-- 198
-- 199
-- 200
-Run completed in 3 seconds, 852 milliseconds.
-Total number of tests run: 203
-Suites: completed 3, aborted 0
-Tests: succeeded 196, failed 7, canceled 0, ignored 0, pending 0
-*** 7 TESTS FAILED ***
+Run completed in 838 milliseconds.
+Total number of tests run: 100
+Suites: completed 1, aborted 0
+Tests: succeeded 94, failed 6, canceled 0, ignored 0, pending 0
+*** 6 TESTS FAILED ***

@@ -1,4 +1,0 @@
-/*
-comment $#@!``043//kldsauheu \n \r
-llsiajssa(()))//pjsidj*/
-int main {}

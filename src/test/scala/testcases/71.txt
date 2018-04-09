@@ -1,1 +1,0 @@
- "\b backspace \f formfeed \r carriage return \n newline \t horizontal tab \' single quote" 

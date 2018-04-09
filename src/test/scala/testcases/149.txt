@@ -1,6 +1,0 @@
-int main(){
-int a,c;
-do a = 0;
-while ()
-return 0;
-}

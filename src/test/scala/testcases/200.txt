@@ -1,1 +1,0 @@
-void main(){myid = foo(2,2)[a+b] == 123;}

@@ -1,4 +1,0 @@
-int main(){
-b = -3;
-a = b || c && d == e < f + g / h ;
-}

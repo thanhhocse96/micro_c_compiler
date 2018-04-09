@@ -215,6 +215,6 @@ ANDOP: '&&';
 OROP: '||';
 ASSIGNOP: '=';
 
+ILLEGAL_ESCAPE: '"'('\\'[bfrnt'"\\] | ~[\b\f\r\n\t\'\"\\])* [\b\f\r\n\t\'\"\\] {setText(getText().substring(1, getText().length() - 1));};
 UNCLOSE_STRING: '"'('\\'[bfrnt'"\\] | ~[\b\f\r\n\t\'\"\\])+ {setText(getText().substring(1, getText().length()));};
-ILLEGAL_ESCAPE: '"'('\\'[bfrnt'"\\] | ~[\b\f\r\n\t\'\"\\])* [\b\f\r\n\t\'\"\\] {setText(getText().substring(1, getText().length()));};
 ERROR_CHAR: .;

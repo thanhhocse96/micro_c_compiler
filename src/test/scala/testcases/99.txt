@@ -1,3 +1,0 @@
-if (true)
-                    //something
-                    a = b;
