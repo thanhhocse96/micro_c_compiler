@@ -64,3 +64,5 @@ compile
 testOnly LexerSuite
 testOnly ParserSuite
 testOnly LexerSuite
+compile 
+test
