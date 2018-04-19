@@ -57,7 +57,8 @@ funcDecl: funcType ID LB paraList RB blockStmt;
 funcType: primitiveType | VOIDTYPE | outputArrPointerType;
 paraList: paraListNonNull?;
 paraListNonNull: paraDecl (COMMA paraDecl)*;
-paraDecl: primitiveType (ID | ID LS RS);
+paraDecl: primitiveType param;
+param: ID | ID LS RS;
 
 // Array pointer TYPE
 arrayPointerType: inputArrPointerType

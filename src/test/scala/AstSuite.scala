@@ -62,4 +62,18 @@ string foo(){}"""
     assert(checkAst(input,expected,209))
   }
 
+  test("210 - Simple many var-declares + 2 simple Function declares (1 array pointer type)") {
+    val input = """string a, b, c[1];
+int main(){}
+string []foo(){}"""
+    val expected = Program(List(VarDecl(Id("a"),StringType),VarDecl(Id("b"),StringType),VarDecl(Id("c"),ArrayType(IntLiteral(1),StringType)),FuncDecl(Id("main"),List(),IntType,Block(List(),List())),FuncDecl(Id("foo"),List(),ArrayPointerType(StringType),Block(List(),List()))))
+    assert(checkAst(input,expected,210))
+  }
+
+  test("211 - Simple many varDecls + simple Function declare has parameters") {
+    val input = """string a, b, c[1];
+int main(int a, int b[]){}"""
+    val expected = Program(List(VarDecl(Id("a"),StringType),VarDecl(Id("b"),StringType),VarDecl(Id("c"),ArrayType(IntLiteral(1),StringType)),FuncDecl(Id("main"),List(VarDecl(Id("a"),IntType),VarDecl(Id("b"),ArrayPointerType(IntType))),IntType,Block(List(),List()))))
+    assert(checkAst(input,expected,211))
+  }
 }

@@ -62,7 +62,7 @@ class ASTGeneration extends MCBaseVisitor[Any] {
   override def visitFuncDecl(ctx: FuncDeclContext): Decl = {
     val funcType : Type = visitFuncType(ctx.funcType)
     val funcName = Id(ctx.ID.getText)
-    val paramList : List[VarDecl] = List()
+    val paramList : List[VarDecl] = visitParaList(ctx.paraList)
     val body : Stmt = Block(List(),List())
     FuncDecl(funcName, paramList, funcType, body)
   }
@@ -83,6 +83,20 @@ class ASTGeneration extends MCBaseVisitor[Any] {
   }
 
   // -- Parameter List
+  override def visitParaList(ctx: ParaListContext): List[VarDecl] = 
+    ctx.getChildCount() match{
+      case 0 => List()
+      case _ => visitParaListNonNull(ctx.paraListNonNull)
+    }
   
+  override def visitParaListNonNull(ctx: ParaListNonNullContext): List[VarDecl] = 
+    ctx.paraDecl.asScala.toList.map(_.accept(this)).asInstanceOf[List[VarDecl]]
   
+  override def visitParaDecl(ctx: ParaDeclContext) = 
+    VarDecl(Id(ctx.param.getChild(0).getText), 
+      if(ctx.param.getChildCount() == 1)
+        visitPrimitiveType(ctx.primitiveType)
+      else
+        ArrayPointerType(visitPrimitiveType(ctx.primitiveType))
+    )
 }
