@@ -13,7 +13,7 @@ import mc.parser.MCParser._
 class ASTGeneration extends MCBaseVisitor[Any] {
 
   // Using to flat the List
-  // Need to cast from Any to the Type you reference
+  // Need to cast from Any to the type referenced
   def flatten(lst: List[Any]): List[Any] = lst flatMap {
     case i: List[_] => flatten(i)
     case e => List(e)
@@ -99,4 +99,6 @@ class ASTGeneration extends MCBaseVisitor[Any] {
       else
         ArrayPointerType(visitPrimitiveType(ctx.primitiveType))
     )
+
+  // -- Statement
 }
