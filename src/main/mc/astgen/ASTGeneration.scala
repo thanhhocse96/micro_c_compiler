@@ -30,7 +30,7 @@ class ASTGeneration extends MCBaseVisitor[Any] {
   override def visitDecl(ctx: DeclContext) =
         ctx.getChild(0).accept(this)
   
-
+  // Variable declaration
   override def visitVarDecl(ctx: VarDeclContext): List[Decl] = {
         val vartype : Type = visitPrimitiveType(ctx.primitiveType)
         val idLst = visitVarList(ctx.varList)
@@ -58,7 +58,31 @@ class ASTGeneration extends MCBaseVisitor[Any] {
         ctx.variable.asScala.toList.map(x => Id(x.ID.getText))
   }
 
-  override def visitFuncDecl(ctx: FuncDeclContext) = {
-    
+  // Function declaration
+  override def visitFuncDecl(ctx: FuncDeclContext): Decl = {
+    val funcType : Type = visitFuncType(ctx.funcType)
+    val funcName = Id(ctx.ID.getText)
+    val paramList : List[VarDecl] = List()
+    val body : Stmt = Block(List(),List())
+    FuncDecl(funcName, paramList, funcType, body)
   }
+
+  // -- Function type
+  override def visitFuncType(ctx: FuncTypeContext): Type = 
+    ctx.getChild(0).getText match{
+      case "void" => VoidType
+      case _ => 
+        {
+          if (ctx.getChild(0).isInstanceOf[PrimitiveTypeContext]){
+            visitPrimitiveType(ctx.getChild(0).asInstanceOf[PrimitiveTypeContext])
+          }
+          else{
+            ArrayPointerType(visitPrimitiveType(ctx.getChild(0).getChild(0).asInstanceOf[PrimitiveTypeContext]))
+          }
+        }
+  }
+
+  // -- Parameter List
+  
+  
 }
