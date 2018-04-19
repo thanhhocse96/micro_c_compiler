@@ -10,17 +10,10 @@ AstSuite:
 - 207 - Simple many var declares with c is Array type - type String
 - 208 - Simple many var declares with c is Array type - type String + simple Function declare
 - 209 - Simple many var declares with c is Array type - type String + 2 simple Function declares
-<<<<<<< HEAD
 - 210 - Simple many var-declares + 2 simple Function declares (1 array pointer type)
 - 211 - Simple many varDecls + simple Function declare has parameters
-Run completed in 597 milliseconds.
+Run completed in 641 milliseconds.
 Total number of tests run: 11
 Suites: completed 1, aborted 0
 Tests: succeeded 10, failed 1, canceled 0, ignored 0, pending 0
-=======
-Run completed in 686 milliseconds.
-Total number of tests run: 9
-Suites: completed 1, aborted 0
-Tests: succeeded 8, failed 1, canceled 0, ignored 0, pending 0
->>>>>>> master
 *** 1 TEST FAILED ***
