@@ -45,8 +45,8 @@ declList: decl+;
 decl: varDecl | funcDecl;
 
 // Variable Declare
-varDecl: primitiveType manyVar SEMI;
-manyVar: variable (COMMA variable)*;
+varDecl: primitiveType varList SEMI;
+varList: variable (COMMA variable)*;
 variable: ID | ID LS INTLIT RS;
 
 // Primitive TYPE

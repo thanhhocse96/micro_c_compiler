@@ -1,6 +1,17 @@
 Run starting. Expected test count is: 0
-Run completed in 101 milliseconds.
-Total number of tests run: 0
-Suites: completed 0, aborted 0
-Tests: succeeded 0, failed 0, canceled 0, ignored 0, pending 0
-No tests were executed.
+AstSuite:
+- 201 - a simple program with void as return type of main *** FAILED ***
+  AstSuite.this.checkAst(input, expected, 201) was false (AstSuite.scala:11)
+- 202 - another simple program with int as return type of main *** FAILED ***
+  AstSuite.this.checkAst(input, expected, 202) was false (AstSuite.scala:16)
+- 203 - a simple program has a simple call putIntLn *** FAILED ***
+  AstSuite.this.checkAst(input, expected, 203) was false (AstSuite.scala:21)
+- 204 - Simple var declare
+- 205 - Simple many var declares
+- 206 - Simple many var declares with c is Array type
+- 207 - Simple many var declares with c is Array type - type String
+Run completed in 487 milliseconds.
+Total number of tests run: 7
+Suites: completed 1, aborted 0
+Tests: succeeded 4, failed 3, canceled 0, ignored 0, pending 0
+*** 3 TESTS FAILED ***

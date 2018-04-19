@@ -12,30 +12,53 @@ import mc.parser.MCParser._
 
 class ASTGeneration extends MCBaseVisitor[Any] {
 
-  //Using to flat the List
+  // Using to flat the List
+  // Need to cast from Any to the Type you reference
   def flatten(lst: List[Any]): List[Any] = lst flatMap {
     case i: List[_] => flatten(i)
     case e => List(e)
   }
 
-  override def visitProgram(ctx:ProgramContext) = 
-  			Program(ctx.declList.asInstanceOf[List[Decl]])
-
-  override def visitDeclList(ctx: DeclListContext) = 
-        flatten(ctx.decl.asScala.toList.map(_.accept(this)))
+  override def visitProgram(ctx:ProgramContext) = {
+        val declLst = visitDeclList(ctx.declList)
+        Program(declLst)
+  }
+  			
+  override def visitDeclList(ctx: DeclListContext) : List[Decl]= 
+        flatten(ctx.decl.asScala.toList.map(_.accept(this))).asInstanceOf[List[Decl]]
 
   override def visitDecl(ctx: DeclContext) =
         ctx.getChild(0).accept(this)
+  
 
-  override def visitPrimitiveType(ctx: PrimitiveTypeContext) = 
-        if(ctx.BOOLTYPE) BoolType()
-        else if(ctx.FLOATTYPE) FloatType 
-        else if(ctx.INTTYPE) IntType 
-        else StringType
+  override def visitVarDecl(ctx: VarDeclContext): List[Decl] = {
+        val vartype : Type = visitPrimitiveType(ctx.primitiveType)
+        val idLst = visitVarList(ctx.varList)
+      
+        val vartypeLst : List[Type] = ctx.varList.variable.asScala.toList.map(x => 
+            if (x.getChildCount() == 1){
+                  vartype
+            }
+            else{
+                  ArrayType(IntLiteral(x.INTLIT.getText.toInt),vartype)
+            }
+        )
 
-  override def visitVarDecl(ctx: VarDeclContext) = {
-        var type = ctx.primitiveType.accept(this).asInstanceOf[Type]
-        ctx.manyVar.asScala.toList.map(_.accept(this))
+        var vardeclLst = idLst.zip(vartypeLst)
+        vardeclLst.map(a => VarDecl(a._1, a._2))
   }
   
+  override def visitPrimitiveType(ctx: PrimitiveTypeContext): Type = 
+        if(ctx.BOOLTYPE != null) BoolType
+        else if(ctx.FLOATTYPE != null) FloatType
+        else if(ctx.INTTYPE != null) IntType
+        else StringType
+        
+  override def visitVarList(ctx: VarListContext): List[Id] = {
+        ctx.variable.asScala.toList.map(x => Id(x.ID.getText))
+  }
+
+  override def visitFuncDecl(ctx: FuncDeclContext) = {
+    
+  }
 }
