@@ -537,7 +537,7 @@ else return 2 ; //WRONG
     assert(checkRec(input, expect, 174))
   }
   test("175") {
-    val input = "void main(){float a; a = 1.2E+3;}"
+    val input = "void main(){float a; a = 1.2E3;}"
     val expect = "sucessful"
     assert(checkRec(input, expect, 175))
   }

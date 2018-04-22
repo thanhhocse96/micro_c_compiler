@@ -3,6 +3,7 @@ import mc.utils._
 
 /**
   * Created by nhphung on 4/29/17.
+  Edit by HQThanh
   */
 class AstSuite extends FunSuite with TestAst {
   test("201 - a simple program with void as return type of main") {
@@ -75,5 +76,49 @@ string []foo(){}"""
 int main(int a, int b[]){}"""
     val expected = Program(List(VarDecl(Id("a"),StringType),VarDecl(Id("b"),StringType),VarDecl(Id("c"),ArrayType(IntLiteral(1),StringType)),FuncDecl(Id("main"),List(VarDecl(Id("a"),IntType),VarDecl(Id("b"),ArrayPointerType(IntType))),IntType,Block(List(),List()))))
     assert(checkAst(input,expected,211))
+  }
+
+  test("212 - Simple many var declares with c is Array type - type String") {
+    val input = """string a, b;
+    int c[1];"""
+    val expected = Program(List(VarDecl(Id("a"),StringType),VarDecl(Id("b"),StringType),VarDecl(Id("c"),ArrayType(IntLiteral(1),IntType))))
+    assert(checkAst(input,expected,212))
+  }
+
+  test("213 - a simple program with declare part in main") {
+    val input = "void main () {int a;}"
+    val expected = Program(List(FuncDecl(Id("main"),List(),VoidType,Block(List(VarDecl(Id("a"),IntType)),List()))))
+    assert(checkAst(input,expected,213))
+  }
+
+  test("214 - a simple program with many declare parts in main") {
+    val input = "void main () {int a, b;}"
+    val expected = Program(List(FuncDecl(Id("main"),List(),VoidType,Block(List(VarDecl(Id("a"),IntType),VarDecl(Id("b"),IntType)),List()))))
+    assert(checkAst(input,expected,214))
+  }
+
+  test("215 - a simple program with many declare parts in main") {
+    val input = "void main () {int a, b; string c;}"
+    val expected = Program(List(FuncDecl(Id("main"),List(),VoidType,Block(List(VarDecl(Id("a"),IntType),VarDecl(Id("b"),IntType),VarDecl(Id("c"),StringType)),List()))))
+    assert(checkAst(input,expected,215))
+  }
+  
+  test("216 - a simple program with declare array part in main") {
+    val input = "void main () {int a[3];}"
+    val expected = Program(List(FuncDecl(Id("main"),List(),VoidType,Block(List(VarDecl(Id("a"),ArrayType(IntLiteral(3),IntType))),List()))))
+    assert(checkAst(input,expected,216))
+  }
+
+  test("217 - a simple program with declare array part in main") {
+    val input = "void main () {int a[3];string b[1];}"
+    val expected = Program(List(FuncDecl(Id("main"),List(),VoidType,Block(List(VarDecl(Id("a"),ArrayType(IntLiteral(3),IntType)),VarDecl(Id("b"),ArrayType(IntLiteral(1),StringType))),List()))))
+    assert(checkAst(input,expected,217))
+  }
+  
+  test("218 - a simple program with declare array part in foo function & main - array pointer type ") {
+    val input = """void foo () {int a[3];string b[1];}
+int [] main(){} """
+    val expected = Program(List(FuncDecl(Id("foo"),List(),VoidType,Block(List(VarDecl(Id("a"),ArrayType(IntLiteral(3),IntType)),VarDecl(Id("b"),ArrayType(IntLiteral(1),StringType))),List())),FuncDecl(Id("main"),List(),ArrayPointerType(IntType),Block(List(),List()))))
+    assert(checkAst(input,expected,218))
   }
 }

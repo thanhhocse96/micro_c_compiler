@@ -45,8 +45,11 @@ declList: decl+;
 decl: varDecl | funcDecl;
 
 // Variable Declare
+// -- Cach 1
 varDecl: primitiveType varList SEMI;
 varList: variable (COMMA variable)*;
+// -- Cach 2
+// varDecl: primitiveType variable (COMMA variable)* SEMI;
 variable: ID | ID LS INTLIT RS;
 
 // Primitive TYPE
@@ -68,7 +71,8 @@ outputArrPointerType: primitiveType LS RS;
 
 // Block statement
 blockStmt: LP declPart stmtPart RP;
-declPart: varDecl*;
+declPart: varDeclListNonNull?;
+varDeclListNonNull: varDecl+;
 stmtPart: stmt*;
 
 stmt: ifStmt

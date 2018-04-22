@@ -3,7 +3,7 @@ AstSuite:
 - 201 - a simple program with void as return type of main
 - 202 - another simple program with int as return type of main
 - 203 - a simple program has a simple call putIntLn *** FAILED ***
-  AstSuite.this.checkAst(input, expected, 203) was false (AstSuite.scala:23)
+  AstSuite.this.checkAst(input, expected, 203) was false (AstSuite.scala:24)
 - 204 - Simple var declare
 - 205 - Simple many var declares
 - 206 - Simple many var declares with c is Array type - type Int
@@ -12,8 +12,15 @@ AstSuite:
 - 209 - Simple many var declares with c is Array type - type String + 2 simple Function declares
 - 210 - Simple many var-declares + 2 simple Function declares (1 array pointer type)
 - 211 - Simple many varDecls + simple Function declare has parameters
-Run completed in 641 milliseconds.
-Total number of tests run: 11
+- 212 - Simple many var declares with c is Array type - type String
+- 213 - a simple program with declare part in main
+- 214 - a simple program with many declare parts in main
+- 215 - a simple program with many declare parts in main
+- 216 - a simple program with declare array part in main
+- 217 - a simple program with declare array part in main
+- 218 - a simple program with declare array part in foo function
+Run completed in 589 milliseconds.
+Total number of tests run: 18
 Suites: completed 1, aborted 0
-Tests: succeeded 10, failed 1, canceled 0, ignored 0, pending 0
+Tests: succeeded 17, failed 1, canceled 0, ignored 0, pending 0
 *** 1 TEST FAILED ***
