@@ -71,7 +71,7 @@ class ASTGeneration extends MCBaseVisitor[Any] {
         ctx.variable.asScala.toList.map(x => Id(x.ID.getText))
   }
 
-  // Function declaration
+// Function declaration
   override def visitFuncDecl(ctx: FuncDeclContext): Decl = {
     val funcType : Type = visitFuncType(ctx.funcType)
     val funcName = Id(ctx.ID.getText)
@@ -95,7 +95,7 @@ class ASTGeneration extends MCBaseVisitor[Any] {
         }
   }
 
-  // -- Parameter List
+// -- Parameter List
   override def visitParaList(ctx: ParaListContext): List[VarDecl] = 
     ctx.getChildCount() match{
       case 0 => List()
@@ -113,7 +113,7 @@ class ASTGeneration extends MCBaseVisitor[Any] {
         ArrayPointerType(visitPrimitiveType(ctx.primitiveType))
     )
 
-  // -- Stmt - Statement
+// -- Stmt - Statement
   override def visitBlockStmt(ctx: BlockStmtContext): Stmt = {
     val declPartLst = visitDeclPart(ctx.declPart)
     // Uncomment after test decl part
@@ -162,6 +162,9 @@ class ASTGeneration extends MCBaseVisitor[Any] {
     val expr : Expr = visitExp0(ctx.exp0)
     val thenStmt : Stmt 
     val elseStmt : Option[Stmt]
+    if(ctx.getChildCount == 5){
+      thenStmt = visit  
+    }
     If(expr, thenStmt, elseStmt)
   }
 
@@ -198,7 +201,7 @@ class ASTGeneration extends MCBaseVisitor[Any] {
     ctx.exp0.accept(this)
   }
 
-  // Expression
+// Expression
   // ---- Assign
   override def visitExp0(ctx: Exp0Context) : Expr = {
     if(ctx.getChildCount == 3){
@@ -210,7 +213,100 @@ class ASTGeneration extends MCBaseVisitor[Any] {
       ctx.exp1.accept(this)
     }
   }
-
-  
+  // ---- Or operator
+  override def visitExp1(ctx: Exp1Context) : Expr = {
+    if(ctx.getChildCount == 3){
+      BinaryOp(ctx.OROP.getText,
+        ctx.exp1.accept(this).asInstanceOf[Expr],
+        ctx.exp2.accept(this).asInstanceOf[Expr])
+    }
+    else{
+      ctx.exp2.accept(this)
+    }
+  }
+  // ---- And operator
+  override def visitExp2(ctx: Exp2Context) : Expr = {
+    if(ctx.getChildCount == 3){
+      BinaryOp(ctx.ANDOP.getText,
+        ctx.exp2.accept(this).asInstanceOf[Expr],
+        ctx.exp3.accept(this).asInstanceOf[Expr])
+    }
+    else{
+      ctx.exp3.accept(this)
+    }
+  }
+  // ---- == and != operator
+  override def visitExp3(ctx: Exp3Context) : Expr = {
+    if(ctx.getChildCount == 3){
+      BinaryOp(ctx.getChild(1).getText,
+        ctx.exp4.accept(this).asInstanceOf[Expr],
+        ctx.exp4.accept(this).asInstanceOf[Expr])
+    }
+    else{
+      ctx.exp4.accept(this)
+    }
+  }
+  // ---- >=, <=, <, > operator
+  override def visitExp4(ctx: Exp4Context) : Expr = {
+    if(ctx.getChildCount == 3){
+      BinaryOp(ctx.getChild(1).getText,
+        ctx.exp5.accept(this).asInstanceOf[Expr],
+        ctx.exp5.accept(this).asInstanceOf[Expr])
+    }
+    else{
+      ctx.exp5.accept(this)
+    }
+  }
+  // ---- + -
+  override def visitExp5(ctx: Exp5Context) : Expr = {
+    if(ctx.getChildCount == 3){
+      BinaryOp(ctx.getChild(1).getText,
+        ctx.exp5.accept(this).asInstanceOf[Expr],
+        ctx.exp6.accept(this).asInstanceOf[Expr])
+    }
+    else{
+      ctx.exp6.accept(this)
+    }
+  }
+  // ---- /, *, % operator
+  override def visitExp6(ctx: Exp6Context) : Expr = {
+    if(ctx.getChildCount == 3){
+      BinaryOp(ctx.getChild(1).getText,
+        ctx.exp6.accept(this).asInstanceOf[Expr],
+        ctx.exp7.accept(this).asInstanceOf[Expr])
+    }
+    else{
+      ctx.exp7.accept(this)
+    }
+  }
+  // ---- Negative (-, !) operator
+  override def visitExp7(ctx: Exp7Context) : Expr = {
+    if(ctx.getChildCount == 2){
+      UnaryOp(ctx.getChild(0).getText,
+        ctx.exp7.accept(this).asInstanceOf[Expr])
+    }
+    else{
+      ctx.exp8.accept(this)
+    }
+  }
+  // ---- () operator
+  override def visitExp8(ctx: Exp8Context) : Expr = {
+    if(ctx.getChildCount == 3){
+      visitExp0(ctx.exp0)
+    }
+    else{
+      ctx.exp9.accept(this)
+    }
+  }
+  // ---- Literal, function call, index
+  override def visitExp9(ctx: Exp9Context) : Expr = {
+    if(ctx.INTLIT != null) IntLiteral(ctx.INTLIT.getText.toInt)
+    else if(ctx.FLOATLIT != null) FloatLiteral(ctx.FLOATLIT.getText.toFloat)
+    else if(ctx.BOOLLIT != null) BooleanLiteral(ctx.BOOLLIT.getText.toBoolean)
+    else if(ctx.STRINGLIT != null) StringLiteral(ctx.STRINGLIT.getText)
+    else if(ctx.ID != null) Id(ctx.ID.getText)
+    else ctx.getChild(0).accept(this)
+  }
+  // ---- 
 
 }
