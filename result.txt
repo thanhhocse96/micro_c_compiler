@@ -57,8 +57,11 @@ AstSuite:
 - 252 - Dowhile statement with statements (for & return(expression))
 - 253 - Expression mix Invocation expression
 - 254 - Expression mix () and Index expression
-Run completed in 1 second, 537 milliseconds.
-Total number of tests run: 57
+- 255 - For statement with block statement with do while
+- 256 - For statement with block statement with do while
+- 257 - For statement with block statement with do while
+Run completed in 1 second, 602 milliseconds.
+Total number of tests run: 60
 Suites: completed 1, aborted 0
-Tests: succeeded 57, failed 0, canceled 0, ignored 0, pending 0
+Tests: succeeded 60, failed 0, canceled 0, ignored 0, pending 0
 All tests passed.

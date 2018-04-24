@@ -521,4 +521,86 @@ a = !c;}"""
     val expected = Program(List(FuncDecl(Id("main"), List(), VoidType, Block(List(), List(BinaryOp("+", ArrayCell(Id("a"), IntLiteral(9)), BinaryOp("+", Id("b"), Id("c"))))))))
     assert(checkAst(input, expected, 254))
   }
+
+  test("255 - For statement with block statement with do while") {
+    val input = """void main () {
+      for (i = 0; i < 10; i = i + 1) 
+        do
+          a = a + 9;
+          break;
+        while (true);
+      
+    }"""
+    val expected = Program(List(FuncDecl(Id("main"), List(), VoidType, Block(List(), List(
+      For(BinaryOp("=", Id("i"), IntLiteral(0)),
+        BinaryOp("<", Id("i"), IntLiteral(10)),
+        BinaryOp("=", Id("i"), BinaryOp("+", Id("i"), IntLiteral(1))),
+        Dowhile( 
+        List(
+          BinaryOp("=", Id("a"), BinaryOp("+", Id("a"), IntLiteral(9))),
+          Break
+        ),
+        BooleanLiteral(true))
+    ))))))
+    assert(checkAst(input, expected, 255))
+  }
+
+  test("256 - For statement with block statement with do while") {
+    val input = """void main () {
+      for (i = 0; i < 10; i = i + 1) 
+        do{
+          int a;
+          a = a + 9;
+          break;
+        }while (true);
+      
+    }"""
+    val expected = Program(List(FuncDecl(Id("main"), List(), VoidType, Block(List(), List(
+      For(BinaryOp("=", Id("i"), IntLiteral(0)),
+        BinaryOp("<", Id("i"), IntLiteral(10)),
+        BinaryOp("=", Id("i"), BinaryOp("+", Id("i"), IntLiteral(1))),
+        Dowhile(
+          List(
+            Block(
+              List(VarDecl(Id("a"),IntType)),
+              List(
+                BinaryOp("=", Id("a"), BinaryOp("+", Id("a"), IntLiteral(9))),
+                Break
+          ))
+          ),
+        BooleanLiteral(true))
+    ))))))
+    assert(checkAst(input, expected, 256))
+  }
+
+  test("257 - For statement with block statement with do while") {
+    val input = """void main () {
+      for (i = 0; i < 10; i = i + 1) 
+        do{
+          int a;
+          a = a + 9;
+          break;
+        }
+        a = a + 9;
+        while (true);
+      
+    }"""
+    val expected = Program(List(FuncDecl(Id("main"), List(), VoidType, Block(List(), List(
+      For(BinaryOp("=", Id("i"), IntLiteral(0)),
+        BinaryOp("<", Id("i"), IntLiteral(10)),
+        BinaryOp("=", Id("i"), BinaryOp("+", Id("i"), IntLiteral(1))),
+        Dowhile(
+          List(
+            Block(
+              List(VarDecl(Id("a"),IntType)),
+              List(
+                BinaryOp("=", Id("a"), BinaryOp("+", Id("a"), IntLiteral(9))),
+                Break
+            )),
+            BinaryOp("=", Id("a"), BinaryOp("+", Id("a"), IntLiteral(9)))
+          ),
+        BooleanLiteral(true))
+    ))))))
+    assert(checkAst(input, expected, 257))
+  }
 }
