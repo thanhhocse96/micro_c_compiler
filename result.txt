@@ -2,8 +2,7 @@ Run starting. Expected test count is: 0
 AstSuite:
 - 201 - a simple program with void as return type of main
 - 202 - another simple program with int as return type of main
-- 203 - a simple program has a simple call putIntLn *** FAILED ***
-  AstSuite.this.checkAst(input, expected, 203) was false (AstSuite.scala:24)
+- 203 - a simple program has a simple call putIntLn
 - 204 - Simple var declare
 - 205 - Simple many var declares
 - 206 - Simple many var declares with c is Array type - type Int
@@ -18,9 +17,48 @@ AstSuite:
 - 215 - a simple program with many declare parts in main
 - 216 - a simple program with declare array part in main
 - 217 - a simple program with declare array part in main
-- 218 - a simple program with declare array part in foo function
-Run completed in 589 milliseconds.
-Total number of tests run: 18
+- 218 - a simple program with declare array part in foo function & main - array pointer type 
+- 219 - a simple math expression + & *
+- 220 - a simple math expression / %
+- 221 - a simple math expression && ||
+- 222 - a simple math expression >= & <
+- 223 - a simple math expression == & !=
+- 224 - a simple math expression - & !
+- 225 - Expression statement - Index expression
+- 226 - Expression statement - Index expression
+- 227 - Expression statement - Invocation expression with parameters
+- 228 - Expression ||
+- 229 - Expression ==
+- 230 - Expression <
+- 231 - Expression +
+- 232 - Expression Not
+- 233 - Expression mix && and ==
+- 234 - Expression mix Invocation expression
+- 235 - Expression mix * and negative
+- 236 - Expression mix with ()
+- 236 - Expression mix () with  negative
+- 237 - Expression statement - Invocation expression with a parameter
+- 238 - Expression statement - array call with foo
+- 239 - Expression statement - Invocation expression with index expression
+- 240 - If statement and else
+- 241 - If statement no else
+- 242 - Nested If statement
+- 243 - Nested If statement
+- 244 - For statement with a statement
+- 245 - For statement with block statement
+- 245 - For statement with block statement with break
+- 245 - For statement with block statement with continue
+- 246 - For statement with 2 statement
+- 247 - For statement with For inside
+- 248 - Dowhile statement with a statement
+- 249 - Dowhile statement with statements
+- 250 - Dowhile statement with statements (return)
+- 251 - Dowhile statement with statements (for & return)
+- 252 - Dowhile statement with statements (for & return(expression))
+- 253 - Expression mix Invocation expression
+- 254 - Expression mix () and Index expression
+Run completed in 1 second, 537 milliseconds.
+Total number of tests run: 57
 Suites: completed 1, aborted 0
-Tests: succeeded 17, failed 1, canceled 0, ignored 0, pending 0
-*** 1 TEST FAILED ***
+Tests: succeeded 57, failed 0, canceled 0, ignored 0, pending 0
+All tests passed.

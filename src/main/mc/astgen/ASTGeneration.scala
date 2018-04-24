@@ -113,16 +113,15 @@ class ASTGeneration extends MCBaseVisitor[Any] {
         ArrayPointerType(visitPrimitiveType(ctx.primitiveType))
     )
 
-// -- Stmt - Statement
+  // -- Stmt - Block Statement
   override def visitBlockStmt(ctx: BlockStmtContext): Stmt = {
     val declPartLst = visitDeclPart(ctx.declPart)
     // Uncomment after test decl part
-    // val stmtPart : List[Stmt] = visitStmtPart(ctx.stmtPart)
-    // Block(declPart, stmtPart) 
-    Block(declPartLst, List())
+    val stmtPart : List[Stmt] = visitStmtPart(ctx.stmtPart)
+    Block(declPartLst, stmtPart) 
   }
 
-  // -- Stmt ---- Declare part
+  // -- Stmt - Block Statement ---- Declare part
   override def visitDeclPart(ctx: DeclPartContext) : List[Decl] = 
     if (ctx.getChildCount == 0){
       List()
@@ -134,20 +133,20 @@ class ASTGeneration extends MCBaseVisitor[Any] {
   override def visitVarDeclListNonNull(ctx : VarDeclListNonNullContext) : List[Decl] = 
     flatten(ctx.varDecl.asScala.toList.map(visitVarDecl(_))).asInstanceOf[List[Decl]]
 
-  // -- Stmt ---- statement part
+  // -- Stmt - Block Statement ---- statement part
   override def visitStmtPart(ctx: StmtPartContext) : List[Stmt] = {
     ctx.stmt.asScala.toList.map(_.accept(this)).asInstanceOf[List[Stmt]]
   }
 
-  override def visitStmt(ctx: StmtContext) : Stmt = 
-    ctx.getChild(0).accept(this) 
+  override def visitStmt(ctx: StmtContext) = 
+    ctx.getChild(0).accept(this)
 
-  override def visitOtherStmt(ctx: OtherStmtContext) : Stmt = {
+  override def visitOtherStmt(ctx: OtherStmtContext) = {
     ctx.getChild(0).accept(this)
   }
 
-  // -- Stmt ---- statement part -- If stmt
-  override def visitIfStmt(ctx: IfStmtContext) : Stmt = {
+  // // -- Stmt ---- statement part -- If stmt
+  override def visitIfStmt(ctx: IfStmtContext) = {
     ctx.getChild(0).accept(this)
   }
 
@@ -155,50 +154,76 @@ class ASTGeneration extends MCBaseVisitor[Any] {
     val expr : Expr = visitExp0(ctx.exp0)
     val thenStmt : Stmt = visitStmtmatch(ctx.stmtmatch(0))
     val elseStmt : Stmt = visitStmtmatch(ctx.stmtmatch(1))
-    If(expr, thenStmt, elseStmt)
+    // elseStmt - Stmt, elseStmt (If) - Option[Stmt]
+    If(expr, thenStmt, Some(elseStmt))
   }
 
   override def visitIfunmatch(ctx: IfunmatchContext) : Stmt = {
     val expr : Expr = visitExp0(ctx.exp0)
-    val thenStmt : Stmt 
-    val elseStmt : Option[Stmt]
     if(ctx.getChildCount == 5){
-      thenStmt = visit  
+      val thenStmt = visitStmt(ctx.stmt).asInstanceOf[Stmt]
+      If(expr,thenStmt,None)
     }
-    If(expr, thenStmt, elseStmt)
+    else{
+      val thenStmt = visitStmtmatch(ctx.stmtmatch)
+      val elseStmt = visitStmtunmatch(ctx.stmtunmatch)
+      If(expr, thenStmt,Some(elseStmt))
+    }
+    
   }
 
   // -- Stmt ---- statement part -- If stmt -- stmt match & unmatch
   override def visitStmtmatch(ctx: StmtmatchContext) : Stmt = {
-    ctx.getChild(0).accept(this)
+    ctx.getChild(0).accept(this).asInstanceOf[Stmt]
   }
 
   override def visitStmtunmatch(ctx: StmtunmatchContext) : Stmt = {
-    ctx.getChild(0).accept(this)
+    ctx.getChild(0).accept(this).asInstanceOf[Stmt]
   }
 
   // -- Stmt ---- statement part -- For Stmt
   override def visitForStmt(ctx: ForStmtContext) : Stmt = {
-    val expr1 : Expr
-    val expr2 : Expr
-    val expr3 : Expr
-    val loop : Stmt
+    val expr1 : Expr = visitExp0(ctx.exp0(0))
+    val expr2 : Expr = visitExp0(ctx.exp0(1))
+    val expr3 : Expr = visitExp0(ctx.exp0(2))
+    val loop : Stmt = visitStmt(ctx.stmt).asInstanceOf[Stmt]
     For(expr1, expr2, expr3, loop)
+  }
+
+  // -- Stmt ---- statement part -- Do While
+  override def visitDowhileStmt(ctx: DowhileStmtContext) : Stmt = {
+    val stmtLst = ctx.stmt.asScala.toList.map(visitStmt(_)).asInstanceOf[List[Stmt]]
+    val exp0 = visitExp0(ctx.exp0)
+    Dowhile(stmtLst,exp0)
   }
 
   // -- Stmt ---- statement part -- Break
   override def visitBreakStmt(ctx: BreakStmtContext) = {
-
+    Break
   }
 
   // -- Stmt ---- statement part -- Continue
   override def visitContinueStmt(ctx: ContinueStmtContext) = {
+    Continue
+  }
 
+  // -- Stmt ---- statement part -- Return
+  override def visitReturnStmt(ctx: ReturnStmtContext) = {
+    ctx.getChild(0).accept(this)
+  }
+
+  override def visitNoExpReturn(ctx: NoExpReturnContext) = {
+    Return(None)
+  }
+
+  override def visitAExpReturn(ctx: AExpReturnContext) = {
+    val exp0 = visitExp0(ctx.exp0)
+    Return(Some(exp0))
   }
 
   // -- Stmt ---- Expression 
   override def visitExpStmt(ctx: ExpStmtContext): Stmt = {
-    ctx.exp0.accept(this)
+    visitExp0(ctx.exp0)
   }
 
 // Expression
@@ -210,7 +235,7 @@ class ASTGeneration extends MCBaseVisitor[Any] {
         ctx.exp0.accept(this).asInstanceOf[Expr])
     }
     else{
-      ctx.exp1.accept(this)
+      visitExp1(ctx.exp1)
     }
   }
   // ---- Or operator
@@ -221,7 +246,7 @@ class ASTGeneration extends MCBaseVisitor[Any] {
         ctx.exp2.accept(this).asInstanceOf[Expr])
     }
     else{
-      ctx.exp2.accept(this)
+      visitExp2(ctx.exp2)
     }
   }
   // ---- And operator
@@ -232,29 +257,29 @@ class ASTGeneration extends MCBaseVisitor[Any] {
         ctx.exp3.accept(this).asInstanceOf[Expr])
     }
     else{
-      ctx.exp3.accept(this)
+      visitExp3(ctx.exp3)
     }
   }
   // ---- == and != operator
   override def visitExp3(ctx: Exp3Context) : Expr = {
     if(ctx.getChildCount == 3){
       BinaryOp(ctx.getChild(1).getText,
-        ctx.exp4.accept(this).asInstanceOf[Expr],
-        ctx.exp4.accept(this).asInstanceOf[Expr])
+        ctx.exp4(0).accept(this).asInstanceOf[Expr],
+        ctx.exp4(1).accept(this).asInstanceOf[Expr])
     }
     else{
-      ctx.exp4.accept(this)
+      visitExp4(ctx.exp4(0))
     }
   }
   // ---- >=, <=, <, > operator
   override def visitExp4(ctx: Exp4Context) : Expr = {
     if(ctx.getChildCount == 3){
       BinaryOp(ctx.getChild(1).getText,
-        ctx.exp5.accept(this).asInstanceOf[Expr],
-        ctx.exp5.accept(this).asInstanceOf[Expr])
+        ctx.exp5(0).accept(this).asInstanceOf[Expr],
+        ctx.exp5(1).accept(this).asInstanceOf[Expr])
     }
     else{
-      ctx.exp5.accept(this)
+      visitExp5(ctx.exp5(0))
     }
   }
   // ---- + -
@@ -265,7 +290,7 @@ class ASTGeneration extends MCBaseVisitor[Any] {
         ctx.exp6.accept(this).asInstanceOf[Expr])
     }
     else{
-      ctx.exp6.accept(this)
+      visitExp6(ctx.exp6)
     }
   }
   // ---- /, *, % operator
@@ -276,7 +301,7 @@ class ASTGeneration extends MCBaseVisitor[Any] {
         ctx.exp7.accept(this).asInstanceOf[Expr])
     }
     else{
-      ctx.exp7.accept(this)
+      visitExp7(ctx.exp7)
     }
   }
   // ---- Negative (-, !) operator
@@ -286,7 +311,7 @@ class ASTGeneration extends MCBaseVisitor[Any] {
         ctx.exp7.accept(this).asInstanceOf[Expr])
     }
     else{
-      ctx.exp8.accept(this)
+      visitExp8(ctx.exp8)
     }
   }
   // ---- () operator
@@ -295,11 +320,11 @@ class ASTGeneration extends MCBaseVisitor[Any] {
       visitExp0(ctx.exp0)
     }
     else{
-      ctx.exp9.accept(this)
+      ctx.exp9.accept(this).asInstanceOf[Expr]
     }
   }
   // ---- Literal, function call, index
-  override def visitExp9(ctx: Exp9Context) : Expr = {
+  override def visitExp9(ctx: Exp9Context) = {
     if(ctx.INTLIT != null) IntLiteral(ctx.INTLIT.getText.toInt)
     else if(ctx.FLOATLIT != null) FloatLiteral(ctx.FLOATLIT.getText.toFloat)
     else if(ctx.BOOLLIT != null) BooleanLiteral(ctx.BOOLLIT.getText.toBoolean)
@@ -307,6 +332,38 @@ class ASTGeneration extends MCBaseVisitor[Any] {
     else if(ctx.ID != null) Id(ctx.ID.getText)
     else ctx.getChild(0).accept(this)
   }
-  // ---- 
+  // ---- Index Expression
+  override def visitIndexExp(ctx: IndexExpContext) : LHS = {
+    val indexer = visitIndexer(ctx.indexer).asInstanceOf[Expr]
+    val exp0 = visitExp0(ctx.exp0)
+    ArrayCell(indexer, exp0)
+  }
+  override def visitIndexer(ctx: IndexerContext) = {
+    if(ctx.ID != null){
+      Id(ctx.ID.getText)
+    }
+    else{
+      ctx.funcCall.accept(this)
+    }
+  }
 
+  // ---- Function call
+  override def visitFuncCall(ctx: FuncCallContext) : Expr= {
+    val id = Id(ctx.ID.getText)
+    val argList = visitArgList(ctx.argList)
+    CallExpr(id, argList)
+  }
+
+  override def visitArgList(ctx: ArgListContext) : List[Expr] = {
+    if(ctx.getChildCount == 0){
+      List()
+    }
+    else{
+      visitArgListNonNull(ctx.argListNonNull)
+    }
+  }
+
+  override def visitArgListNonNull(ctx: ArgListNonNullContext) : List[Expr] = {
+    ctx.exp0.asScala.toList.map(visitExp0(_))
+  }
 }
