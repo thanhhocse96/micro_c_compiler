@@ -1,67 +1,147 @@
 Run starting. Expected test count is: 0
-AstSuite:
-- 201 - a simple program with void as return type of main
-- 202 - another simple program with int as return type of main
-- 203 - a simple program has a simple call putIntLn
-- 204 - Simple var declare
-- 205 - Simple many var declares
-- 206 - Simple many var declares with c is Array type - type Int
-- 207 - Simple many var declares with c is Array type - type String
-- 208 - Simple many var declares with c is Array type - type String + simple Function declare
-- 209 - Simple many var declares with c is Array type - type String + 2 simple Function declares
-- 210 - Simple many var-declares + 2 simple Function declares (1 array pointer type)
-- 211 - Simple many varDecls + simple Function declare has parameters
-- 212 - Simple many var declares with c is Array type - type String
-- 213 - a simple program with declare part in main
-- 214 - a simple program with many declare parts in main
-- 215 - a simple program with many declare parts in main
-- 216 - a simple program with declare array part in main
-- 217 - a simple program with declare array part in main
-- 218 - a simple program with declare array part in foo function & main - array pointer type 
-- 219 - a simple math expression + & *
-- 220 - a simple math expression / %
-- 221 - a simple math expression && ||
-- 222 - a simple math expression >= & <
-- 223 - a simple math expression == & !=
-- 224 - a simple math expression - & !
-- 225 - Expression statement - Index expression
-- 226 - Expression statement - Index expression
-- 227 - Expression statement - Invocation expression with parameters
-- 228 - Expression ||
-- 229 - Expression ==
-- 230 - Expression <
-- 231 - Expression +
-- 232 - Expression Not
-- 233 - Expression mix && and ==
-- 234 - Expression mix Invocation expression
-- 235 - Expression mix * and negative
-- 236 - Expression mix with ()
-- 236 - Expression mix () with  negative
-- 237 - Expression statement - Invocation expression with a parameter
-- 238 - Expression statement - array call with foo
-- 239 - Expression statement - Invocation expression with index expression
-- 240 - If statement and else
-- 241 - If statement no else
-- 242 - Nested If statement
-- 243 - Nested If statement
-- 244 - For statement with a statement
-- 245 - For statement with block statement
-- 245 - For statement with block statement with break
-- 245 - For statement with block statement with continue
-- 246 - For statement with 2 statement
-- 247 - For statement with For inside
-- 248 - Dowhile statement with a statement
-- 249 - Dowhile statement with statements
-- 250 - Dowhile statement with statements (return)
-- 251 - Dowhile statement with statements (for & return)
-- 252 - Dowhile statement with statements (for & return(expression))
-- 253 - Expression mix Invocation expression
-- 254 - Expression mix () and Index expression
-- 255 - For statement with block statement with do while
-- 256 - For statement with block statement with do while
-- 257 - For statement with block statement with do while
-Run completed in 1 second, 602 milliseconds.
-Total number of tests run: 60
+CheckerSuite:
+- 401 - Undeclared Function
+- 402 - Type Mismatch In Expression: getInt *** FAILED ***
+  java.util.concurrent.ExecutionException: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
+  at java.util.concurrent.FutureTask.report(FutureTask.java:122)
+  at java.util.concurrent.FutureTask.get(FutureTask.java:206)
+  at Timed.timeoutAfter(TestUtils.scala:17)
+  at Timed.timeoutAfter$(TestUtils.scala:10)
+  at CheckerSuite.timeoutAfter(CheckerSuite.scala:8)
+  at TestChecker.check(TestChecker.scala:43)
+  at TestChecker.check$(TestChecker.scala:38)
+  at CheckerSuite.check(CheckerSuite.scala:8)
+  at TestChecker.checkCkr(TestChecker.scala:64)
+  at TestChecker.checkCkr$(TestChecker.scala:61)
+  ...
+  Cause: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
+  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:133)
+  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:23)
+  at mc.utils.CallExpr.accept(AST.scala:71)
+  at mc.checker.StaticChecker.$anonfun$visitFuncDecl$4(StaticCheck.scala:108)
+  at scala.collection.immutable.List.map(List.scala:283)
+  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:108)
+  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:23)
+  at mc.utils.FuncDecl.accept(AST.scala:25)
+  at mc.checker.StaticChecker.$anonfun$visitProgram$1(StaticCheck.scala:71)
+  at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:122)
+  ...
+- 403 - Type Mismatch In Expression: putIntLn *** FAILED ***
+  java.util.concurrent.ExecutionException: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
+  at java.util.concurrent.FutureTask.report(FutureTask.java:122)
+  at java.util.concurrent.FutureTask.get(FutureTask.java:206)
+  at Timed.timeoutAfter(TestUtils.scala:17)
+  at Timed.timeoutAfter$(TestUtils.scala:10)
+  at CheckerSuite.timeoutAfter(CheckerSuite.scala:8)
+  at TestChecker.check(TestChecker.scala:43)
+  at TestChecker.check$(TestChecker.scala:38)
+  at CheckerSuite.check(CheckerSuite.scala:8)
+  at TestChecker.checkCkr(TestChecker.scala:64)
+  at TestChecker.checkCkr$(TestChecker.scala:61)
+  ...
+  Cause: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
+  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:133)
+  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:23)
+  at mc.utils.CallExpr.accept(AST.scala:71)
+  at mc.checker.StaticChecker.$anonfun$visitFuncDecl$4(StaticCheck.scala:108)
+  at scala.collection.immutable.List.map(List.scala:283)
+  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:108)
+  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:23)
+  at mc.utils.FuncDecl.accept(AST.scala:25)
+  at mc.checker.StaticChecker.$anonfun$visitProgram$1(StaticCheck.scala:71)
+  at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:122)
+  ...
+- 404 - Check with AST *** FAILED ***
+  java.util.concurrent.ExecutionException: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
+  at java.util.concurrent.FutureTask.report(FutureTask.java:122)
+  at java.util.concurrent.FutureTask.get(FutureTask.java:206)
+  at Timed.timeoutAfter(TestUtils.scala:17)
+  at Timed.timeoutAfter$(TestUtils.scala:10)
+  at CheckerSuite.timeoutAfter(CheckerSuite.scala:8)
+  at TestChecker.check(TestChecker.scala:43)
+  at TestChecker.check$(TestChecker.scala:38)
+  at CheckerSuite.check(CheckerSuite.scala:8)
+  at TestChecker.checkAst(TestChecker.scala:58)
+  at TestChecker.checkAst$(TestChecker.scala:56)
+  ...
+  Cause: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
+  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:133)
+  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:23)
+  at mc.utils.CallExpr.accept(AST.scala:71)
+  at mc.checker.StaticChecker.$anonfun$visitFuncDecl$4(StaticCheck.scala:108)
+  at scala.collection.immutable.List.map(List.scala:283)
+  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:108)
+  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:23)
+  at mc.utils.FuncDecl.accept(AST.scala:25)
+  at mc.checker.StaticChecker.$anonfun$visitProgram$1(StaticCheck.scala:71)
+  at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:122)
+  ...
+- 405 - Check with AST putIntLn with float *** FAILED ***
+  java.util.concurrent.ExecutionException: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
+  at java.util.concurrent.FutureTask.report(FutureTask.java:122)
+  at java.util.concurrent.FutureTask.get(FutureTask.java:206)
+  at Timed.timeoutAfter(TestUtils.scala:17)
+  at Timed.timeoutAfter$(TestUtils.scala:10)
+  at CheckerSuite.timeoutAfter(CheckerSuite.scala:8)
+  at TestChecker.check(TestChecker.scala:43)
+  at TestChecker.check$(TestChecker.scala:38)
+  at CheckerSuite.check(CheckerSuite.scala:8)
+  at TestChecker.checkAst(TestChecker.scala:58)
+  at TestChecker.checkAst$(TestChecker.scala:56)
+  ...
+  Cause: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
+  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:133)
+  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:23)
+  at mc.utils.CallExpr.accept(AST.scala:71)
+  at mc.checker.StaticChecker.$anonfun$visitFuncDecl$4(StaticCheck.scala:108)
+  at scala.collection.immutable.List.map(List.scala:283)
+  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:108)
+  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:23)
+  at mc.utils.FuncDecl.accept(AST.scala:25)
+  at mc.checker.StaticChecker.$anonfun$visitProgram$1(StaticCheck.scala:71)
+  at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:122)
+  ...
+- 406 - Check Simple declare - No Error
+- 407 - Redeclared variables
+- 408 - Redeclared function
+- 409 - Redeclared function with variable before
+- 410 - Redeclared variable with function before
+- 411 - Redeclared parameter
+- 412 - Redeclared vardeclare
+- 413 - Redeclared vardeclare with parameter
+- 414 - Redeclared variable in block with function
+- 415 - Redeclared function with parameter
+- 416 - Redeclared function with parameter
+- 417 - Redeclared builtin function in function
+- 418 - Type Mismatch function call *** FAILED ***
+  java.util.concurrent.ExecutionException: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
+  at java.util.concurrent.FutureTask.report(FutureTask.java:122)
+  at java.util.concurrent.FutureTask.get(FutureTask.java:206)
+  at Timed.timeoutAfter(TestUtils.scala:17)
+  at Timed.timeoutAfter$(TestUtils.scala:10)
+  at CheckerSuite.timeoutAfter(CheckerSuite.scala:8)
+  at TestChecker.check(TestChecker.scala:43)
+  at TestChecker.check$(TestChecker.scala:38)
+  at CheckerSuite.check(CheckerSuite.scala:8)
+  at TestChecker.checkCkr(TestChecker.scala:64)
+  at TestChecker.checkCkr$(TestChecker.scala:61)
+  ...
+  Cause: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
+  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:133)
+  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:23)
+  at mc.utils.CallExpr.accept(AST.scala:71)
+  at mc.checker.StaticChecker.$anonfun$visitFuncDecl$4(StaticCheck.scala:108)
+  at scala.collection.immutable.List.map(List.scala:283)
+  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:108)
+  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:23)
+  at mc.utils.FuncDecl.accept(AST.scala:25)
+  at mc.checker.StaticChecker.$anonfun$visitProgram$1(StaticCheck.scala:71)
+  at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:122)
+  ...
+- 419 - Undeclared function
+- 420 - No Entry point
+Run completed in 802 milliseconds.
+Total number of tests run: 20
 Suites: completed 1, aborted 0
-Tests: succeeded 60, failed 0, canceled 0, ignored 0, pending 0
-All tests passed.
+Tests: succeeded 15, failed 5, canceled 0, ignored 0, pending 0
+*** 5 TESTS FAILED ***
