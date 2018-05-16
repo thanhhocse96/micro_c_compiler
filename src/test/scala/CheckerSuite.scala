@@ -159,7 +159,7 @@ void main (int a, float b) {
 float getInt;
 foo(1.4);
 }"""
-  val expected = "Type Mismatch In Expression: foo(1.4)"
+  val expected = "Type Mismatch In Expression: CallExpr(Id(foo),List(FloatLiteral(1.4)))"
   assert(checkCkr(input,expected,418))
   }
 
@@ -179,5 +179,385 @@ float getInt;
 float abc(){}"""
   val expected = "No Entry Point"
   assert(checkCkr(input,expected,420))
+  }
+
+  test("421 - Type Mismatch function call") {
+  val input = """float foo(int a){}
+void main (int a, float b) {
+float getInt;
+foo(b);
+}"""
+  val expected = "Type Mismatch In Expression: CallExpr(Id(foo),List(Id(b)))"
+  assert(checkCkr(input,expected,421))
+  }
+
+  test("422 - Type Mismatch In Expression: ArrayCell - index FloatType") {
+    val input = """int a;
+    int b[9];
+    void main() {
+      a = b[1.0];
+    }"""
+    val expected = """Type Mismatch In Expression: ArrayCell(Id(b),FloatLiteral(1.0))"""
+    assert(checkCkr(input, expected, 422))
+  }
+
+  test("423 - Type Mismatch In Expression: ArrayCell - index is BooleanType") {
+    val input = """int a;
+    int b[9];
+    void main() {
+      a = b[true];
+    }"""
+    val expected = """Type Mismatch In Expression: ArrayCell(Id(b),BooleanLiteral(true))"""
+    assert(checkCkr(input, expected, 423))
+  }
+
+  test("424 - Type Mismatch In Expression: ArrayCell - index is StringType") {
+    val input = """int a;
+    int b[9];
+    void main() {
+      a = b["1.0"];
+    }"""
+    val expected = """Type Mismatch In Expression: ArrayCell(Id(b),StringLiteral(1.0))"""
+    assert(checkCkr(input, expected, 424))
+  }
+
+  test("425 - Type Mismatch In Expression: ArrayCell - index is ArrayType") {
+    val input = """int a;
+    int b[9];
+    void main() {
+      a = b[b];
+    }"""
+    val expected = """Type Mismatch In Expression: ArrayCell(Id(b),Id(b))"""
+    assert(checkCkr(input, expected, 425))
+  }
+
+  test("426 - Type Mismatch In Expression: ArrayCell - index is ArrayPointerType") {
+    val input = """int a;
+    int b[9];
+    void main(int c[]) {
+      a = b[c];  
+    }"""
+    val expected = """Type Mismatch In Expression: ArrayCell(Id(b),Id(c))"""
+    assert(checkCkr(input, expected, 426))
+  }
+
+  test("427 - Type Mismatch In Expression: ArrayCell - index is VoidType") {
+    val input = """void example(){}
+int a;
+int b[9];
+void main(int c[]) {
+  a = b[example()];  
+}
+ """
+    val expected = """Type Mismatch In Expression: ArrayCell(Id(b),CallExpr(Id(example),List()))"""
+    assert(checkCkr(input, expected, 427))
+  }
+
+  test("428 - Type Mismatch In Expression: ArrayCell - arr is IntType") {
+    val input = """int a;
+    int b[9];
+    void main(int c) {
+      a = c[0];  
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: ArrayCell(Id(c),IntLiteral(0))"""
+    assert(checkCkr(input, expected, 428))
+  }
+
+  test("429 - Type Mismatch In Expression: ArrayCell - arr is FloatType") {
+    val input = """int a;
+    int b[9];
+    void main(float c) {
+      a = c[1.0];  
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: ArrayCell(Id(c),FloatLiteral(1.0))"""
+    assert(checkCkr(input, expected, 429))
+  }
+
+  test("430 - Type Mismatch In Expression: ArrayCell - arr is StringType") {
+    val input = """int a;
+    int b[9];
+    void main(string c) {
+      a = c["1.0"];  
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: ArrayCell(Id(c),StringLiteral(1.0))"""
+    assert(checkCkr(input, expected, 430))
+  }
+
+  test("431 - Type Mismatch In Expression: ArrayCell - arr is VoidType") {
+    val input = """int a;
+    void main(float c) {
+      a = example["1.0"];  
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: ArrayCell(Id(example),StringLiteral(1.0))"""
+    assert(checkCkr(input, expected, 431))
+  }
+
+  test("432 - Type Mismatch In Expression: Id Undeclared") {
+    val input = """int a;
+    void main(float c) {
+      b = 1;  
+    }
+    void example(){}"""
+    val expected = """Undeclared Identifier: b"""
+    assert(checkCkr(input, expected, 432))
+  }
+
+  test("433 - Function not Declared") {
+    val input = """int a;
+    void main(float c) {
+      a = example(1);  
+    }
+    void example(){}"""
+    val expected = """Undeclared Function: example"""
+    assert(checkCkr(input, expected, 433))
+  }
+
+  test("434 - Type Mismatch In Expression: CallExpr - not equal number of actual parameters") {
+    val input = """void example(int b, int c){}
+    int a;
+    void main(float c) {
+      a = example(1);  
+    }
+    """
+    val expected = """Type Mismatch In Expression: CallExpr(Id(example),List(IntLiteral(1)))"""
+    assert(checkCkr(input, expected, 434))
+  }
+
+  test("435 - Type Mismatch In Expression: CallExpr - type mismatch passing parameters") {
+    val input = """void example(int b){}
+    int a;
+    void main(float c) {
+      a = example(1.0);  
+    }
+    """
+    val expected = """Type Mismatch In Expression: CallExpr(Id(example),List(FloatLiteral(1.0)))"""
+    assert(checkCkr(input, expected, 435))
+  }
+
+  test("436 - Return false") {
+    val input = Program(List(
+      FuncDecl(Id("example"),List(),VoidType,
+        Block(List(),
+          List(
+            Return(Some(StringLiteral("a")))
+          ))),
+      FuncDecl(Id("main"),List(),VoidType,
+        Block(List(),
+          List()))))
+
+    val expected = """Type Mismatch In Statement: Return(Some(StringLiteral(a)))"""
+    assert(checkAst(input, expected, 436))
+  }
+
+  test("437 - Return false") {
+    val input = """void example0(int b){}
+void example1(int b){
+  return;
+}
+void example2(int b){
+  return 2;
+}
+int a;
+void main(float c) {
+  a = example(1.0);  
+}"""
+    val expected = """Type Mismatch In Statement: Return(Some(IntLiteral(2)))"""
+    assert(checkCkr(input, expected, 437))
+  }
+
+  test("438 - Type mismatch at return ") {
+    val input = """void example0(int b){}
+    void example1(int b){
+    }
+    void example2(int b){
+    }
+    int example3(int b){
+      int a;
+      return a;
+    }
+    int example4(int b){
+      string a;
+      return a;
+    }
+    int a;
+    int main(float c) {
+      a = example0(1);  
+    }
+    """
+    val expected = """Type Mismatch In Statement: Return(Some(Id(a)))"""
+    assert(checkCkr(input, expected, 438))
+  }
+
+  test("439 - Type Mismatch In Expression - BinaryOp <<=>>= IntType BooleanType") {
+    val input = """boolean a;
+    void main() {
+      a = 1 < true;
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: BinaryOp(<,IntLiteral(1),BooleanLiteral(true))"""
+    assert(checkCkr(input, expected, 439))
+  }
+
+  test("440 - Type Mismatch In Expression - BinaryOp <<=>>= IntType VoidType") {
+    val input = """void example(){}
+boolean a;
+void main() {
+  a = 1 < example();
+}
+  """
+    val expected = """Type Mismatch In Expression: BinaryOp(<,IntLiteral(1),CallExpr(Id(example),List()))"""
+    assert(checkCkr(input, expected, 440))
+  }
+
+  test("441 - Type Mismatch In Expression - BinaryOp +-*/ IntType VoidType") {
+    val input = """int a;
+    void b(){}
+    void main() {
+      a = 1 + b();
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: BinaryOp(+,IntLiteral(1),CallExpr(Id(b),List()))"""
+    assert(checkCkr(input, expected, 441))
+  }
+
+  test("442 - Type Mismatch In Expression - BinaryOp == IntType VoidType") {
+    val input = """int a;
+    void b(){}
+    void main() {
+      a = 1 == b();
+    }"""
+    val expected = """Type Mismatch In Expression: BinaryOp(==,IntLiteral(1),CallExpr(Id(b),List()))"""
+    assert(checkCkr(input, expected, 442))
+  }
+
+  test("443 - Type Mismatch In Expression - BinaryOp <<=>>= IntType StringType") {
+    val input = """boolean a;
+    void main() {
+      a = 1 < "a";
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: BinaryOp(<,IntLiteral(1),StringLiteral(a))"""
+    assert(checkCkr(input, expected, 443))
+  }
+
+  test("444 - Type Mismatch In Expression - BinaryOp <<=>>= IntType VoidType") {
+    val input = """boolean a;
+    void b(){}
+    void main() {
+      a = 1 < b();
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: BinaryOp(<,IntLiteral(1),CallExpr(Id(b),List()))"""
+    assert(checkCkr(input, expected, 444))
+  }
+
+  test("445 - Type Mismatch In Expression - BinaryOp ||&& IntType BooleanType") {
+    val input = """boolean a;
+    boolean b;
+    void main() {
+      a = 1 || b;
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: BinaryOp(||,IntLiteral(1),Id(b))"""
+    assert(checkCkr(input, expected, 445))
+  }
+
+  test("446 - Type Mismatch In Expression - BinaryOp ||&& FloatType BooleanType") {
+    val input = """boolean a;
+    boolean b;
+    void main() {
+      a = 1.0 || b;
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: BinaryOp(||,FloatLiteral(1.0),Id(b))"""
+    assert(checkCkr(input, expected, 446))
+  }
+
+  test("447 - Type Mismatch In Expression - BinaryOp ||&& StringType BooleanType") {
+    val input = """boolean a;
+    boolean b;
+    void main() {
+      a = "1.0" || b;
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: BinaryOp(||,StringLiteral(1.0),Id(b))"""
+    assert(checkCkr(input, expected, 447))
+  }
+
+  test("448 - Type Mismatch In Expression - BinaryOp ||&& VoidType BooleanType") {
+    val input = """boolean a;
+    boolean b;
+    void c(){}
+    void main() {
+      a = c() || b;
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: BinaryOp(||,CallExpr(Id(c),List()),Id(b))"""
+    assert(checkCkr(input, expected, 448))
+  }
+
+  test("449 - Type Mismatch In Expression - BinaryOp ==!= FloatType IntType") {
+    val input = """boolean a;
+    boolean b;
+    void main() {
+      a = 1.0 == b;
+    }
+    void example(){}"""
+    val expected = """Type Mismatch In Expression: BinaryOp(==,FloatLiteral(1.0),Id(b))"""
+    assert(checkCkr(input, expected, 449))
+  }
+
+  test("450 - Type Mismatch In Statement If: expr StringLiteral") {
+    val input = """int a;
+    void main(int b){
+      if ("1.0"){
+      }
+    }"""
+    val expected = """Type Mismatch In Statement: If(StringLiteral(1.0),Block(List(),List()),None)"""
+    assert(checkCkr(input, expected, 450))
+  }
+
+  test("451 - Type Mismatch In Statement If: expr IntLiteral") {
+    val input = """int a;
+    void main(int b){
+      if (a){
+      }
+    }"""
+    val expected = """Type Mismatch In Statement: If(Id(a),Block(List(),List()),None)"""
+    assert(checkCkr(input, expected, 451))
+  }
+
+  test("452 - Type Mismatch In Statement For: expr1 BoolLiteral") {
+    val input = """int a;
+    void main(int b){
+      for (true; true; 1)
+        return;
+    }"""
+    val expected = """Type Mismatch In Statement: For(BooleanLiteral(true),BooleanLiteral(true),IntLiteral(1),Return(None))"""
+    assert(checkCkr(input, expected, 452))
+  }
+
+  test("453 - Type Mismatch In Statement Return") {
+    val input = """int a;
+    void main(int b){
+      int a;
+      return 2;
+    }"""
+    val expected = """Type Mismatch In Statement: Return(Some(IntLiteral(2)))"""
+    assert(checkCkr(input, expected, 453))
+  }
+
+  test("454 - Type Mismatch In Statement Return Array pointer type") {
+    val input = """int a;
+    int[] main(int b[]){
+      int a;
+      return b;
+    }"""
+    val expected = """Type Mismatch In Statement: Return(Some(IntLiteral(2)))"""
+    assert(checkCkr(input, expected, 454))
   }
 }

@@ -1,106 +1,10 @@
 Run starting. Expected test count is: 0
 CheckerSuite:
 - 401 - Undeclared Function
-- 402 - Type Mismatch In Expression: getInt *** FAILED ***
-  java.util.concurrent.ExecutionException: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
-  at java.util.concurrent.FutureTask.report(FutureTask.java:122)
-  at java.util.concurrent.FutureTask.get(FutureTask.java:206)
-  at Timed.timeoutAfter(TestUtils.scala:17)
-  at Timed.timeoutAfter$(TestUtils.scala:10)
-  at CheckerSuite.timeoutAfter(CheckerSuite.scala:8)
-  at TestChecker.check(TestChecker.scala:43)
-  at TestChecker.check$(TestChecker.scala:38)
-  at CheckerSuite.check(CheckerSuite.scala:8)
-  at TestChecker.checkCkr(TestChecker.scala:64)
-  at TestChecker.checkCkr$(TestChecker.scala:61)
-  ...
-  Cause: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
-  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:133)
-  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:23)
-  at mc.utils.CallExpr.accept(AST.scala:71)
-  at mc.checker.StaticChecker.$anonfun$visitFuncDecl$4(StaticCheck.scala:108)
-  at scala.collection.immutable.List.map(List.scala:283)
-  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:108)
-  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:23)
-  at mc.utils.FuncDecl.accept(AST.scala:25)
-  at mc.checker.StaticChecker.$anonfun$visitProgram$1(StaticCheck.scala:71)
-  at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:122)
-  ...
-- 403 - Type Mismatch In Expression: putIntLn *** FAILED ***
-  java.util.concurrent.ExecutionException: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
-  at java.util.concurrent.FutureTask.report(FutureTask.java:122)
-  at java.util.concurrent.FutureTask.get(FutureTask.java:206)
-  at Timed.timeoutAfter(TestUtils.scala:17)
-  at Timed.timeoutAfter$(TestUtils.scala:10)
-  at CheckerSuite.timeoutAfter(CheckerSuite.scala:8)
-  at TestChecker.check(TestChecker.scala:43)
-  at TestChecker.check$(TestChecker.scala:38)
-  at CheckerSuite.check(CheckerSuite.scala:8)
-  at TestChecker.checkCkr(TestChecker.scala:64)
-  at TestChecker.checkCkr$(TestChecker.scala:61)
-  ...
-  Cause: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
-  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:133)
-  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:23)
-  at mc.utils.CallExpr.accept(AST.scala:71)
-  at mc.checker.StaticChecker.$anonfun$visitFuncDecl$4(StaticCheck.scala:108)
-  at scala.collection.immutable.List.map(List.scala:283)
-  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:108)
-  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:23)
-  at mc.utils.FuncDecl.accept(AST.scala:25)
-  at mc.checker.StaticChecker.$anonfun$visitProgram$1(StaticCheck.scala:71)
-  at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:122)
-  ...
-- 404 - Check with AST *** FAILED ***
-  java.util.concurrent.ExecutionException: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
-  at java.util.concurrent.FutureTask.report(FutureTask.java:122)
-  at java.util.concurrent.FutureTask.get(FutureTask.java:206)
-  at Timed.timeoutAfter(TestUtils.scala:17)
-  at Timed.timeoutAfter$(TestUtils.scala:10)
-  at CheckerSuite.timeoutAfter(CheckerSuite.scala:8)
-  at TestChecker.check(TestChecker.scala:43)
-  at TestChecker.check$(TestChecker.scala:38)
-  at CheckerSuite.check(CheckerSuite.scala:8)
-  at TestChecker.checkAst(TestChecker.scala:58)
-  at TestChecker.checkAst$(TestChecker.scala:56)
-  ...
-  Cause: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
-  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:133)
-  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:23)
-  at mc.utils.CallExpr.accept(AST.scala:71)
-  at mc.checker.StaticChecker.$anonfun$visitFuncDecl$4(StaticCheck.scala:108)
-  at scala.collection.immutable.List.map(List.scala:283)
-  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:108)
-  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:23)
-  at mc.utils.FuncDecl.accept(AST.scala:25)
-  at mc.checker.StaticChecker.$anonfun$visitProgram$1(StaticCheck.scala:71)
-  at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:122)
-  ...
-- 405 - Check with AST putIntLn with float *** FAILED ***
-  java.util.concurrent.ExecutionException: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
-  at java.util.concurrent.FutureTask.report(FutureTask.java:122)
-  at java.util.concurrent.FutureTask.get(FutureTask.java:206)
-  at Timed.timeoutAfter(TestUtils.scala:17)
-  at Timed.timeoutAfter$(TestUtils.scala:10)
-  at CheckerSuite.timeoutAfter(CheckerSuite.scala:8)
-  at TestChecker.check(TestChecker.scala:43)
-  at TestChecker.check$(TestChecker.scala:38)
-  at CheckerSuite.check(CheckerSuite.scala:8)
-  at TestChecker.checkAst(TestChecker.scala:58)
-  at TestChecker.checkAst$(TestChecker.scala:56)
-  ...
-  Cause: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
-  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:133)
-  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:23)
-  at mc.utils.CallExpr.accept(AST.scala:71)
-  at mc.checker.StaticChecker.$anonfun$visitFuncDecl$4(StaticCheck.scala:108)
-  at scala.collection.immutable.List.map(List.scala:283)
-  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:108)
-  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:23)
-  at mc.utils.FuncDecl.accept(AST.scala:25)
-  at mc.checker.StaticChecker.$anonfun$visitProgram$1(StaticCheck.scala:71)
-  at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:122)
-  ...
+- 402 - Type Mismatch In Expression: getInt
+- 403 - Type Mismatch In Expression: putIntLn
+- 404 - Check with AST
+- 405 - Check with AST putIntLn with float
 - 406 - Check Simple declare - No Error
 - 407 - Redeclared variables
 - 408 - Redeclared function
@@ -113,35 +17,46 @@ CheckerSuite:
 - 415 - Redeclared function with parameter
 - 416 - Redeclared function with parameter
 - 417 - Redeclared builtin function in function
-- 418 - Type Mismatch function call *** FAILED ***
-  java.util.concurrent.ExecutionException: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
-  at java.util.concurrent.FutureTask.report(FutureTask.java:122)
-  at java.util.concurrent.FutureTask.get(FutureTask.java:206)
-  at Timed.timeoutAfter(TestUtils.scala:17)
-  at Timed.timeoutAfter$(TestUtils.scala:10)
-  at CheckerSuite.timeoutAfter(CheckerSuite.scala:8)
-  at TestChecker.check(TestChecker.scala:43)
-  at TestChecker.check$(TestChecker.scala:38)
-  at CheckerSuite.check(CheckerSuite.scala:8)
-  at TestChecker.checkCkr(TestChecker.scala:64)
-  at TestChecker.checkCkr$(TestChecker.scala:61)
-  ...
-  Cause: java.lang.ClassCastException: scala.Some cannot be cast to mc.checker.Symbol
-  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:133)
-  at mc.checker.StaticChecker.visitCallExpr(StaticCheck.scala:23)
-  at mc.utils.CallExpr.accept(AST.scala:71)
-  at mc.checker.StaticChecker.$anonfun$visitFuncDecl$4(StaticCheck.scala:108)
-  at scala.collection.immutable.List.map(List.scala:283)
-  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:108)
-  at mc.checker.StaticChecker.visitFuncDecl(StaticCheck.scala:23)
-  at mc.utils.FuncDecl.accept(AST.scala:25)
-  at mc.checker.StaticChecker.$anonfun$visitProgram$1(StaticCheck.scala:71)
-  at scala.collection.LinearSeqOptimized.foldLeft(LinearSeqOptimized.scala:122)
-  ...
+- 418 - Type Mismatch function call
 - 419 - Undeclared function
 - 420 - No Entry point
-Run completed in 802 milliseconds.
-Total number of tests run: 20
+- 421 - Type Mismatch function call
+- 422 - Type Mismatch In Expression: ArrayCell - index FloatType
+- 423 - Type Mismatch In Expression: ArrayCell - index is BooleanType
+- 424 - Type Mismatch In Expression: ArrayCell - index is StringType
+- 425 - Type Mismatch In Expression: ArrayCell - index is ArrayType
+- 426 - Type Mismatch In Expression: ArrayCell - index is ArrayPointerType
+- 427 - Type Mismatch In Expression: ArrayCell - index is VoidType
+- 428 - Type Mismatch In Expression: ArrayCell - arr is IntType
+- 429 - Type Mismatch In Expression: ArrayCell - arr is FloatType
+- 430 - Type Mismatch In Expression: ArrayCell - arr is StringType
+- 431 - Type Mismatch In Expression: ArrayCell - arr is VoidType
+- 432 - Type Mismatch In Expression: Id Undeclared
+- 433 - Function not Declared
+- 434 - Type Mismatch In Expression: CallExpr - not equal number of actual parameters
+- 435 - Type Mismatch In Expression: CallExpr - type mismatch passing parameters
+- 436 - Return false
+- 437 - Return false
+- 438 - Type mismatch at return 
+- 439 - Type Mismatch In Expression - BinaryOp <<=>>= IntType BooleanType
+- 440 - Type Mismatch In Expression - BinaryOp <<=>>= IntType VoidType
+- 441 - Type Mismatch In Expression - BinaryOp +-*/ IntType VoidType
+- 442 - Type Mismatch In Expression - BinaryOp == IntType VoidType
+- 443 - Type Mismatch In Expression - BinaryOp <<=>>= IntType StringType
+- 444 - Type Mismatch In Expression - BinaryOp <<=>>= IntType VoidType
+- 445 - Type Mismatch In Expression - BinaryOp ||&& IntType BooleanType
+- 446 - Type Mismatch In Expression - BinaryOp ||&& FloatType BooleanType
+- 447 - Type Mismatch In Expression - BinaryOp ||&& StringType BooleanType
+- 448 - Type Mismatch In Expression - BinaryOp ||&& VoidType BooleanType
+- 449 - Type Mismatch In Expression - BinaryOp ==!= FloatType IntType
+- 450 - Type Mismatch In Statement If: expr StringLiteral
+- 451 - Type Mismatch In Statement If: expr IntLiteral
+- 452 - Type Mismatch In Statement For: expr1 BoolLiteral
+- 453 - Type Mismatch In Statement For: expr1 BoolLiteral
+- 454 - Type Mismatch In Statement For: expr1 BoolLiteral *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 454) was false (CheckerSuite.scala:561)
+Run completed in 1 second, 223 milliseconds.
+Total number of tests run: 54
 Suites: completed 1, aborted 0
-Tests: succeeded 15, failed 5, canceled 0, ignored 0, pending 0
-*** 5 TESTS FAILED ***
+Tests: succeeded 53, failed 1, canceled 0, ignored 0, pending 0
+*** 1 TEST FAILED ***
