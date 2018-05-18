@@ -5,23 +5,25 @@ CheckerSuite:
 - 403 - Type Mismatch In Expression: putIntLn
 - 404 - Check with AST
 - 405 - Check with AST putIntLn with float
-- 406 - Check Simple declare - No Error
-- 407 - Redeclared variables
-- 408 - Redeclared function
-- 409 - Redeclared function with variable before
-- 410 - Redeclared variable with function before
-- 411 - Redeclared parameter
-- 412 - Redeclared vardeclare
-- 413 - Redeclared vardeclare with parameter
-- 414 - Redeclared variable in block with function
-- 415 - Redeclared function with parameter
-- 416 - Redeclared function with parameter
-- 417 - Redeclared builtin function in function
-- 418 - Type Mismatch function call
-- 419 - Undeclared function
-- 420 - No Entry point
-- 421 - Type Mismatch function call
-- 422 - Type Mismatch In Expression: ArrayCell - index FloatType
+- 406 - Redeclared variables
+- 407 - Redeclared parameter
+- 408 - Redeclared variables
+- 409 - No entry point
+- 409 - Unary expr - (-)BoolType
+- 409 - Unary expr - (-)BoolType with multi var in Env
+- 410 - Unary expr - (-)BoolType from Parameter
+- 411 - Unary expr - (-)BoolType from Array
+- 412 - Unary expr - (-)IntType from Array Pointer
+- 413 - Unary expr - (-)BoolType from Array Pointer
+- 414 - Unary expr - (Unary -)getInt(IntType - wrong type)
+- 415 - Unary expr - (Unary -)putInt(IntType)
+- 416 - Unary expr - (Unary -)putInt(IntType)
+- 417 - BinOp expr - Unary wrong
+- 418 - BinOp expr && || - Unary wrong
+- 419 - BinOp expr && || > - Unary wrong
+- 420 - UnaryOp(-, Binop(==))
+- 421 - Redeclare Var in If Statement
+- 422 - Type mismatch If Statement
 - 423 - Type Mismatch In Expression: ArrayCell - index is BooleanType
 - 424 - Type Mismatch In Expression: ArrayCell - index is StringType
 - 425 - Type Mismatch In Expression: ArrayCell - index is ArrayType
@@ -52,11 +54,74 @@ CheckerSuite:
 - 450 - Type Mismatch In Statement If: expr StringLiteral
 - 451 - Type Mismatch In Statement If: expr IntLiteral
 - 452 - Type Mismatch In Statement For: expr1 BoolLiteral
-- 453 - Type Mismatch In Statement For: expr1 BoolLiteral
-- 454 - Type Mismatch In Statement For: expr1 BoolLiteral *** FAILED ***
-  CheckerSuite.this.checkCkr(input, expected, 454) was false (CheckerSuite.scala:561)
-Run completed in 1 second, 223 milliseconds.
-Total number of tests run: 54
+- 453 - Type Mismatch In Statement Return
+- 454 - Type Mismatch In Expression: ArrayCell - index is StringType
+- 455 - Type Mismatch In Expression: ArrayCell - index is ArrayType
+- 456 - Type Mismatch In Expression: ArrayCell - index is ArrayPointerType
+- 457 - Type Mismatch In Expression: ArrayCell - index is VoidType *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 457) was false (CheckerSuite.scala:648)
+- 458 - Type Mismatch In Expression: ArrayCell - arr is IntType
+- 459 - Type Mismatch In Expression: ArrayCell - arr is FloatType
+- 460 - Type Mismatch In Expression: ArrayCell - arr is StringType
+- 461 - Type Mismatch In Expression: ArrayCell - arr is VoidType
+- 462 - Type Mismatch In Expression: Id Undeclared
+- 463 - Type Mismatch In Expression: CallExpr - not equal number of actual parameters *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 463) was false (CheckerSuite.scala:711)
+- 464 - Type Mismatch In Expression: CallExpr - not equal number of actual parameters *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 464) was false (CheckerSuite.scala:721)
+- 465 - Type Mismatch In Expression: CallExpr - type mismatch passing parameters *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 465) was false (CheckerSuite.scala:731)
+- 466 - CallExpr - passing parameters success *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 466) was false (CheckerSuite.scala:743)
+- 467 - CallExpr - passing parameters success *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 467) was false (CheckerSuite.scala:755)
+- 468 - CallExpr - passing parameters success *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 468) was false (CheckerSuite.scala:767)
+- 469 - UnaryOp - '!' with IntType
+- 470 - UnaryOp - '!' with FloatType
+- 471 - UnaryOp - '!' with StringType
+- 472 - UnaryOp - '-' with StringType
+- 473 - UnaryOp - '-' with BooleanType
+- 474 - UnaryOp - '-' with VoidType *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 474) was false (CheckerSuite.scala:822)
+- 475 - BinaryOp - assign - success *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 475) was false (CheckerSuite.scala:845)
+- 476 - Type Mismatch In Expression - BinaryOp - assign - lhs is VoidType
+- 477 - Type Mismatch In Expression - BinaryOp - assign - lhs is ArrayType
+- 478 - Type Mismatch In Expression - BinaryOp - assign - lhs is ArrayPointerType *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 478) was false (CheckerSuite.scala:881)
+- 479 - Type Mismatch In Expression - BinaryOp +-*/ IntType StringType
+- 480 - Type Mismatch In Expression - BinaryOp +-*/ IntType BooleanType
+- 481 - Type Mismatch In Expression - BinaryOp +-*/ IntType VoidType
+- 482 - Type Mismatch In Expression - BinaryOp <<=>>= IntType BooleanType
+- 483 - Type Mismatch In Expression - BinaryOp <<=>>= IntType StringType
+- 484 - Type Mismatch In Expression - BinaryOp <<=>>= IntType VoidType
+- 485 - Type Mismatch In Expression - BinaryOp ||&& IntType BooleanType
+- 486 - Type Mismatch In Expression - BinaryOp ||&& FloatType BooleanType
+- 487 - Type Mismatch In Expression - BinaryOp ||&& StringType BooleanType
+- 488 - Type Mismatch In Expression - BinaryOp ||&& VoidType BooleanType
+- 489 - Type Mismatch In Expression - BinaryOp ==!= FloatType IntType
+- 490 - Type Mismatch In Expression - BinaryOp ==!= StringType IntType
+- 491 - Type Mismatch In Expression - BinaryOp ==!= VoidType IntType
+- 492 - Type Mismatch In Expression: getInt
+- 493 - Undeclared Identifier: i *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 493) was false (CheckerSuite.scala:1040)
+- 494 - Undeclared Identifier: main *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expected, 494) was false (CheckerSuite.scala:1054)
+- 495 - Redeclared function after declared variable *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expect, 495) was false (CheckerSuite.scala:1070)
+- 496 - Undeclared Function: funy *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expect, 496) was false (CheckerSuite.scala:1098)
+- 497 - Type Mismatch In Statement return *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expect, 497) was false (CheckerSuite.scala:1126)
+- 498 - 16 *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expect, 498) was false (CheckerSuite.scala:1141)
+- 499 - Type Mismatch In Statement return *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expect, 499) was false (CheckerSuite.scala:1159)
+- 500 - Type Mismatch In Expression ArrayCell *** FAILED ***
+  CheckerSuite.this.checkCkr(input, expect, 500) was false (CheckerSuite.scala:1180)
+Run completed in 2 seconds, 57 milliseconds.
+Total number of tests run: 102
 Suites: completed 1, aborted 0
-Tests: succeeded 53, failed 1, canceled 0, ignored 0, pending 0
-*** 1 TEST FAILED ***
+Tests: succeeded 84, failed 18, canceled 0, ignored 0, pending 0
+*** 18 TESTS FAILED ***
