@@ -8,4 +8,5 @@ src/test/scala/solutions
 src/test/scala/testcases
 
 target
+project
 # End of https://www.gitignore.io/api/scala
