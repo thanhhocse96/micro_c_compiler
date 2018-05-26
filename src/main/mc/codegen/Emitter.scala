@@ -3,7 +3,7 @@
 *	@version 1.0
 *	28/6/2006
 *	This class is used to generate code at a intermediate level
-*
+* @author Ho Quang Thanh - 1413494
 */
 package mc.codegen
 
@@ -30,6 +30,7 @@ class Emitter(filename:String) {
     case MType(il,o) => "("+il.foldLeft("")(_+getJVMType(_))+")"+getJVMType(o)
     case ClassType(t) => "L"+t+";"
   }
+
   def getFullType(inType:Type):String = inType match {
     case IntType => "int"
     case StringType => "java/lang/String"

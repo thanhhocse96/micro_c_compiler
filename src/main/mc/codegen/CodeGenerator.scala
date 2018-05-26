@@ -33,26 +33,21 @@ object CodeGenerator extends Utils {
 	}
 }
 
-
-
+// Symbol(name: String, typ: Type, value: Val)
+case class Symbol(name: String, mtype: Type, value: Val)
+// MType ~ FunctionType/Checker
+case class MType(partype: List[Type], rettype: Type) extends Type
 
 case class ClassType(cname:String) extends Type
-
-
+case class PointerType(typ: Type) extends Type
 
 //case class SubContext(emit:Emitter,decl:List[Decl]) 
-
 case class SubBody(frame:Frame,sym:List[Symbol]) 
 
 class Access(val frame:Frame,val sym:List[Symbol],val isLeft:Boolean,val isFirst:Boolean)
-
 trait Val
-  case class Index(value:Int) extends Val
-  case class CName(value:String) extends Val
-
-
-
-
+case class Index(value:Int) extends Val
+case class CName(value:String) extends Val
 
 class CodeGenVisitor(astTree:AST,env:List[Symbol],dir:File) extends BaseVisitor with Utils {
 	
@@ -67,7 +62,7 @@ class CodeGenVisitor(astTree:AST,env:List[Symbol],dir:File) extends BaseVisitor 
       ast.decl.foldLeft(SubBody(null,env))((e,x) => visit(x,e).asInstanceOf[SubBody]) 
       // generate default constructor 
       genMETHOD(
-            FuncDecl("<init>",List(),null,Block(List(),List())),c,new Frame("<init>",VoidType))
+            FuncDecl(Id("<init>"),List(),null,Block(List(),List())),c,new Frame("<init>",VoidType))
       emit.emitEPILOG()
       c   
   }
@@ -81,11 +76,11 @@ class CodeGenVisitor(astTree:AST,env:List[Symbol],dir:File) extends BaseVisitor 
    *  @param o the referencing environment
    */
   def genMETHOD(consdecl:FuncDecl,o:Any,frame:Frame) = {
-    
+    // consdecl.name is Id(String) - Check it in ../utils/AST.scala
     val isInit = consdecl.returnType == null
-    val isMain = consdecl.name == "main" && consdecl.param.length == 0 && consdecl.returnType == VoidType
+    val isMain = consdecl.name.name == "main" && consdecl.param.length == 0 && consdecl.returnType == VoidType
     val returnType = if (isInit) VoidType else consdecl.returnType
-    val methodName = if (isInit) "<init>" else consdecl.name
+    val methodName = if (isInit) "<init>" else consdecl.name.name //consdecl.name: Id
     val intype = if (isMain) List(PointerType(StringType)) else List()
     val mtype =  MType(intype,returnType)
     
@@ -120,9 +115,9 @@ class CodeGenVisitor(astTree:AST,env:List[Symbol],dir:File) extends BaseVisitor 
 
   override def visitFuncDecl(ast:FuncDecl,o:Any) = {
     val subctxt = o.asInstanceOf[SubBody]
-    val frame = new Frame(ast.name,ast.returnType)
+    val frame = new Frame(ast.name.name,ast.returnType)
     genMETHOD(ast,subctxt.sym,frame)
-    SubBody(null,Symbol(ast.name,MType(List(),ast.returnType),CName(className))::subctxt.sym)
+    SubBody(null,Symbol(ast.name.name,MType(List(),ast.returnType),CName(className))::subctxt.sym)
   }
   
 
@@ -131,7 +126,7 @@ class CodeGenVisitor(astTree:AST,env:List[Symbol],dir:File) extends BaseVisitor 
     val ctxt = o.asInstanceOf[SubBody]
     val frame = ctxt.frame
     val nenv = ctxt.sym
-    val sym = lookup(ast.method,nenv,(x:Symbol)=>x.name).get
+    val sym = lookup(ast.method.name,nenv,(x:Symbol)=>x.name).get
     val cname = sym.value.asInstanceOf[CName].value
     val ctype = sym.mtype
 
