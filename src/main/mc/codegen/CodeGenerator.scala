@@ -1,5 +1,6 @@
 /**
  *	@author Nguyen Hua Phung
+ *  @author Ho Quang Thanh - 1413494
  *	@version 1.0
  *	23/10/2015
  * 	This file provides a simple version of code generator
@@ -8,32 +9,13 @@
 
 package mc.codegen
 
-
-
-
-
 import mc.checker._
 import mc.utils._
 import java.io.{PrintWriter, File}
 
 
-object CodeGenerator extends Utils {
-  val libName = "io"
-  def init() = List( Symbol("getInt",MType(List(),IntType),CName(libName)),
-                     Symbol("putInt",MType(List(IntType),VoidType),CName(libName)),
-                     Symbol("putIntLn",MType(List(IntType),VoidType),CName(libName))
-                    )
-    
-  
-	def gen(ast:AST,dir:File) = {
-
-    val gl = init()     
-		val gc = new CodeGenVisitor(ast,gl,dir)    
-		gc.visit(ast, null);   
-	}
-}
-
 // Symbol(name: String, typ: Type, value: Val)
+// value: variable index <- frame.getNewIndex
 case class Symbol(name: String, mtype: Type, value: Val)
 // MType ~ FunctionType/Checker
 case class MType(partype: List[Type], rettype: Type) extends Type
@@ -45,9 +27,34 @@ case class PointerType(typ: Type) extends Type
 case class SubBody(frame:Frame,sym:List[Symbol]) 
 
 class Access(val frame:Frame,val sym:List[Symbol],val isLeft:Boolean,val isFirst:Boolean)
+
 trait Val
 case class Index(value:Int) extends Val
 case class CName(value:String) extends Val
+
+object CodeGenerator extends Utils {
+  val libName = "io"
+  def init() = List(  Symbol("getInt",MType(List(),IntType),CName(libName)),
+                      Symbol("putInt",MType(List(IntType),VoidType),CName(libName)),
+                      Symbol("putIntLn",MType(List(IntType),VoidType),CName(libName)),
+                      Symbol("getFloat", MType(List(), FloatType), CName(libName)),
+                      Symbol("putFloat", MType(List(FloatType), VoidType), CName(libName)),
+                      Symbol("putFloatLn", MType(List(FloatType), VoidType), CName(libName)),
+                      Symbol("putBool", MType(List(BoolType), VoidType), CName(libName)),
+                      Symbol("putBoolLn", MType(List(BoolType), VoidType), CName(libName)),
+                      Symbol("putString", MType(List(StringType), VoidType), CName(libName)),
+                      Symbol("putStringLn", MType(List(StringType), VoidType), CName(libName)),
+                      Symbol("putLn", MType(List(), VoidType), CName(libName))
+                    )
+    
+  
+	def gen(ast:AST,dir:File) = {
+
+    val gl = init()     
+		val gc = new CodeGenVisitor(ast,gl,dir)    
+		gc.visit(ast, null);   
+	}
+}
 
 class CodeGenVisitor(astTree:AST,env:List[Symbol],dir:File) extends BaseVisitor with Utils {
 	
@@ -112,7 +119,12 @@ class CodeGenVisitor(astTree:AST,env:List[Symbol],dir:File) extends BaseVisitor 
     
   }
 
+  // Variable Declare
+  override def visitVarDecl(ast: VarDecl, o: Any) = {
+    
+  }
 
+  // Function Declare
   override def visitFuncDecl(ast:FuncDecl,o:Any) = {
     val subctxt = o.asInstanceOf[SubBody]
     val frame = new Frame(ast.name.name,ast.returnType)
@@ -120,8 +132,10 @@ class CodeGenVisitor(astTree:AST,env:List[Symbol],dir:File) extends BaseVisitor 
     SubBody(null,Symbol(ast.name.name,MType(List(),ast.returnType),CName(className))::subctxt.sym)
   }
   
-
+  // Visit Statement: If Stmt is(Expr;) -> pop after visit
+  def visitStmt()={}
   
+  // 
   override def visitCallExpr(ast:CallExpr,o:Any) = {
     val ctxt = o.asInstanceOf[SubBody]
     val frame = ctxt.frame
@@ -138,9 +152,47 @@ class CodeGenVisitor(astTree:AST,env:List[Symbol],dir:File) extends BaseVisitor 
     )
     emit.printout(in._1)
     
-    emit.printout(emit.emitINVOKESTATIC(cname+"/"+ast.method,ctype,frame))
+    // ast.method id Id - Check in ../utils/AST
+    emit.printout(emit.emitINVOKESTATIC(cname+"/"+ast.method.name,ctype,frame))
              
+  }
+
+  // Binary Op
+  override def visitBinaryOp(ast: BinaryOp, o: Any) = {
+    val ctxt = o.asInstanceOf[Access]
+    val frame = ctxt.frame
+    val nenv = ctxt.sym
     
+    val op = ast.op
+    val lhs = visit(ast.left, ctxt).asInstanceOf[(String, Type)]
+    val rhs = visit(ast.right, ctxt).asInstanceOf[(String, Type)]
+
+    op match {
+      case "+" | "-" => {
+        (lhs._2, rhs._2) match {
+          case(IntType, FloatType) => (lhs._1 + emit.emitI2F(frame) + rhs._1 + emit.emitADDOP(op, FloatType, frame), lhs._2)
+          case _ => (lhs._1 + rhs._1 + emit.emitADDOP(op, lhs._2, frame), lhs._2)
+        }
+      }
+      case "*" | "/"=> {
+        (lhs._2, rhs._2) match {
+          case(IntType, FloatType) => (lhs._1 + emit.emitI2F(frame) + rhs._1 + emit.emitMULOP(op, FloatType, frame), FloatType)
+          case(FloatType, IntType) => (lhs._1 + rhs._1 + emit.emitI2F(frame) + emit.emitMULOP(op, FloatType, frame), FloatType)
+          case _ => (lhs._1 + rhs._1 + emit.emitMULOP(op, lhs._2, frame), lhs._2)
+        }
+      }
+      
+      case _ => (emit.emitADDOP(op, lhs._2, frame), lhs._2)
+    }
+
+    
+  }
+
+  override def visitUnaryOp(ast: UnaryOp, o: Any) = {
+    val ctxt = o.asInstanceOf[Access]
+    val frame = ctxt.frame
+    val nenv = ctxt.sym
+
   }
 
   override def visitIntLiteral(ast:IntLiteral,o:Any) = {
@@ -149,4 +201,21 @@ class CodeGenVisitor(astTree:AST,env:List[Symbol],dir:File) extends BaseVisitor 
     (emit.emitPUSHICONST(ast.value, frame),IntType)
   }
   
+  override def visitFloatLiteral(ast: FloatLiteral, o: Any) = {
+    val ctxt = o.asInstanceOf[Access]
+    val frame = ctxt.frame
+    (emit.emitPUSHFCONST(ast.value.toString, frame),FloatType)
+  }
+
+  override def visitBooleanLiteral(ast: BooleanLiteral, o: Any) ={
+    val ctxt = o.asInstanceOf[Access]
+    val frame = ctxt.frame
+    (emit.emitPUSHICONST(ast.value.toString, frame), BoolType)
+  }
+
+  // override def visitStringLiteral(ast: StringLiteral, o: Any) ={
+  //   val ctxt = o.asInstanceOf[Access]
+  //   val frame = ctxt.frame
+  //   (emit.emitPUSHCONST(ast.value, StringType, frame), StringType)
+  // }
 }

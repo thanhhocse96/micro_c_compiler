@@ -25,7 +25,9 @@ class Emitter(filename:String) {
   def getJVMType(inType:Type):String = inType match {
     case IntType => "I"
     case StringType => "Ljava/lang/String;"
+    case FloatType => "F"
     case VoidType => "V"
+    case BoolType => "Z"
     case PointerType(t) => "["+getJVMType(t)
     case MType(il,o) => "("+il.foldLeft("")(_+getJVMType(_))+")"+getJVMType(o)
     case ClassType(t) => "L"+t+";"
