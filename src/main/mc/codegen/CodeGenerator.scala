@@ -121,7 +121,10 @@ class CodeGenVisitor(astTree:AST,env:List[Symbol],dir:File) extends BaseVisitor 
 
   // Variable Declare
   override def visitVarDecl(ast: VarDecl, o: Any) = {
-    
+    val subctxt = o.asInstanceOf[SubBody]
+    val frame = new Frame (ast.variable.name, ast.varType)
+
+    SubBody(frame, Symbol(ast.variable.name, ast.varType, Index(frame.getNewIndex))::subctxt.sym )
   }
 
   // Function Declare

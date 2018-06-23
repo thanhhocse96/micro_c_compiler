@@ -4,9 +4,9 @@ import org.scalatest.FunSuite
   * Created by nhphung on 4/30/17.
   */
 class CodeGenSuite extends FunSuite with TestCodeGen {
-  test("501 - simple program => print 5") {
-    val input = "void main () {putIntLn(5);}"
-    val expected = "5"
+  test("501 - simple program => print 1000") {
+    val input = "void main () {putIntLn(1000);}"
+    val expected = "1000"
     assert(checkCode(input,expected,501))
   }
   test("502 - another simple program => print 125") {

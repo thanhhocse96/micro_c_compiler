@@ -1,6 +1,6 @@
 Run starting. Expected test count is: 0
 CodeGenSuite:
-- 501 - simple program => print 5
+- 501 - simple program => print 1000
 - 502 - another simple program => print 125
 - 503 - special program => print 0
 - 504 - simple program => print 1.2341
@@ -13,24 +13,11 @@ CodeGenSuite:
 - 511 - simple program => 2 * 3.5e-3
 - 512 - simple program => true (false)
 - 513 - simple program => 15.9 / 3 *** FAILED ***
-  CodeGenSuite.this.checkCode(input, expected, 513) was false (CodeGenSuite.scala:79)
+  CodeGenSuite.this.checkCode(input, expected, 513) was false (CodeGenSuite.scala:80)
 - 514 - simple program => 15 / 3.0
 - 515 - simple program => 16 / 3
-- 516 - simple program => 3 *** FAILED ***
-  java.io.FileNotFoundException: src/test/scala/solutions/516/result.txt (No such file or directory)
-  at java.io.FileInputStream.open0(Native Method)
-  at java.io.FileInputStream.open(FileInputStream.java:195)
-  at java.io.FileInputStream.<init>(FileInputStream.java:138)
-  at scala.io.Source$.fromFile(Source.scala:91)
-  at scala.io.Source$.fromFile(Source.scala:76)
-  at scala.io.Source$.fromFile(Source.scala:54)
-  at TestCodeGen.compare(TestCodeGen.scala:82)
-  at TestCodeGen.compare$(TestCodeGen.scala:80)
-  at CodeGenSuite.compare(CodeGenSuite.scala:6)
-  at TestCodeGen.checkCode(TestCodeGen.scala:74)
-  ...
-Run completed in 841 milliseconds.
-Total number of tests run: 16
+Run completed in 951 milliseconds.
+Total number of tests run: 15
 Suites: completed 1, aborted 0
-Tests: succeeded 14, failed 2, canceled 0, ignored 0, pending 0
-*** 2 TESTS FAILED ***
+Tests: succeeded 14, failed 1, canceled 0, ignored 0, pending 0
+*** 1 TEST FAILED ***
